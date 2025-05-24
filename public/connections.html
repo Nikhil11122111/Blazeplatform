@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- [Head] start -->
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connections - Blaze</title>
+    
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- [Font] Family -->
+    <link rel="stylesheet" href="../assets/fonts/inter/inter.css" id="main-font-link" />
+    <link rel="stylesheet" href="../assets/css/plugins/datepicker-bs5.min.css">
+
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css" />
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/feather.css" />
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/fontawesome.css" />
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/material.css" />
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+    <link rel="stylesheet" href="../assets/css/style-preset.css" />
+    <!-- [Choices CSS] -->
+    <link rel="stylesheet" href="../assets/css/plugins/select.bootstrap5.min.css" />
+    <!-- [Datepicker CSS] -->
+    <link rel="stylesheet" href="../assets/css/plugins/datepicker-bs5.min.css" />
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+  <body>
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+      <div class="loader-track">
+        <div class="loader-fill"></div>
+      </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <!-- Include sidebar -->
+    <div id="sidebar-container"></div>
+    
+    <!-- Include header -->
+    <div id="header-container"></div>
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+      <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="javascript: void(0)">Home</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Connections</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+          <!-- [ sample-page ] start -->
+          <div class="col-sm-12">
+            <div class="mail-wrapper">
+              <div class="offcanvas-xxl offcanvas-start mail-offcanvas" tabindex="-1" id="offcanvas_mail">
+                <div class="offcanvas-header">
+                  <button class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvas_mail" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                  <div id="mail-menulist" class="show collapse collapse-horizontal">
+                    <div class="mail-menulist">
+                      <div class="card">
+                        <div class="card-body">
+                        </div>
+                        <div class="scroll-block">
+                          <div class="card-body pt-0">
+                            <div class="list-group list-group-flush" id="list-tab" role="tablist">
+                              <a class="list-group-item list-group-item-action active" id="list-mailtab-1" data-bs-toggle="list" href="#list-mail-1" role="tab">
+                                <span>
+                                  <i class="ti ti-inbox"></i>
+                                  Sparks Unlocked
+                                </span>
+                              </a>
+                              <a class="list-group-item list-group-item-action" id="list-mailtab-3" data-bs-toggle="list" href="#list-mail-3" role="tab">
+                                <span>
+                                  <i class="ti ti-send"></i>
+                                  Pending Sparks
+                                </span>
+                              </a>
+                              <a class="list-group-item list-group-item-action" id="list-mailtab-4" data-bs-toggle="list" href="#list-mail-4" role="tab">
+                                <span>
+                                  <i class="ti ti-mail-forward"></i>
+                                  Sparks Invited
+                                </span>
+                              </a>
+                              <hr class="my-3 border border-secondary-subtle">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mail-content">
+                <div class="d-sm-flex align-items-center">
+                  <ul class="list-inline me-auto mb-3">
+                    <li class="list-inline-item align-bottom">
+                      <a href="#" class="d-xxl-none avtar avtar-s btn-link-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_mail">
+                        <i class="ti ti-menu-2 f-18"></i>
+                      </a>
+                      <a href="#" class="d-none d-xxl-inline-flex avtar avtar-s btn-link-secondary" data-bs-toggle="collapse" data-bs-target="#mail-menulist">
+                        <i class="ti ti-menu-2 f-18"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <ul class="list-inline ms-auto mb-3">
+                    <li class="list-inline-item">
+                      <div class="form-search">
+                        <i class="ti ti-search"></i>
+                        <input type="search" class="form-control" placeholder="Search Followers" id="connections-search">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="list-mail-1" role="tabpanel" aria-labelledby="list-mailtab-1">
+                        <div class="card table-card">
+                          <div class="card-body scroll-block">
+                            <div class="card">
+                              <div class="card-header">
+                                <h5>Sparks Unlocked <span class="badge bg-primary rounded-pill">30</span></h5>
+                              </div>
+                              <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                  <div class="d-block d-sm-flex align-items-center justify-content-between">
+                                    <div class="media align-items-center mb-3 mb-sm-0">
+                                      <img class="rounded-circle img-fluid wid-40" src="../assets/images/user/avatar-1.jpg" alt="User image">
+                                      <div class="media-body mx-2">
+                                        <h6 class="mb-0">John Doe</h6>
+                                        <p class="mb-0">@John_Doe</p>
+                                      </div>
+                                    </div>
+                                    <div class="ms-5 ms-sm-0">
+                                      <button class="btn btn-outline-secondary me-1">Extinguish</button>
+                                      <button class="btn btn-primary">Message</button>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li class="list-group-item">
+                                  <div class="d-block d-sm-flex align-items-center justify-content-between">
+                                    <div class="media align-items-center mb-3 mb-sm-0">
+                                      <img class="rounded-circle img-fluid wid-40" src="../assets/images/user/avatar-5.jpg" alt="User image">
+                                      <div class="media-body mx-2">
+                                        <h6 class="mb-0">Addie Bass</h6>
+                                        <p class="mb-0">@A_Bass</p>
+                                      </div>
+                                    </div>
+                                    <div class="ms-5 ms-sm-0">
+                                      <button class="btn btn-outline-secondary me-1">Extinguish</button>
+                                      <button class="btn btn-primary">Message</button>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li class="list-group-item">
+                                  <div class="d-block d-sm-flex align-items-center justify-content-between">
+                                    <div class="media align-items-center mb-3 mb-sm-0">
+                                      <img class="rounded-circle img-fluid wid-40" src="../assets/images/user/avatar-3.jpg" alt="User image">
+                                      <div class="media-body mx-2">
+                                        <h6 class="mb-0">Alberta Robbins</h6>
+                                        <p class="mb-0">@AlbeRob12</p>
+                                      </div>
+                                    </div>
+                                    <div class="ms-5 ms-sm-0">
+                                      <button class="btn btn-outline-secondary me-1">Extinguish</button>
+                                      <button class="btn btn-primary">Message</button>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li class="list-group-item">
+                                  <div class="d-block d-sm-flex align-items-center justify-content-between">
+                                    <div class="media align-items-center mb-3 mb-sm-0">
+                                      <img class="rounded-circle img-fluid wid-40" src="../assets/images/user/avatar-4.jpg" alt="User image">
+                                      <div class="media-body mx-2">
+                                        <h6 class="mb-0">Agnes McGee</h6>
+                                        <p class="mb-0">@AgnMcGee</p>
+                                      </div>
+                                    </div>
+                                    <div class="ms-5 ms-sm-0">
+                                      <button class="btn btn-outline-secondary me-1">Extinguish</button>
+                                      <button class="btn btn-primary">Message</button>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li class="list-group-item">
+                                  <div class="d-block d-sm-flex align-items-center justify-content-between">
+                                    <div class="media align-items-center mb-3 mb-sm-0">
+                                      <img class="rounded-circle img-fluid wid-40" src="../assets/images/user/avatar-5.jpg" alt="User image">
+                                      <div class="media-body mx-2">
+                                        <h6 class="mb-0">Lilla Bardenova</h6>
+                                        <p class="mb-0">@lillabardenova</p>
+                                      </div>
+                                    </div>
+                                    <div class="ms-5 ms-sm-0">
+                                      <button class="btn btn-outline-secondary me-1">Extinguish</button>
+                                      <button class="btn btn-primary">Message</button>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li class="list-group-item">
+                                  <div class="d-block d-sm-flex align-items-center justify-content-between">
+                                    <div class="media align-items-center mb-3 mb-sm-0">
+                                      <img class="rounded-circle img-fluid wid-40" src="../assets/images/user/avatar-6.jpg" alt="User image">
+                                      <div class="media-body mx-2">
+                                        <h6 class="mb-0">John Doe</h6>
+                                        <p class="mb-0">@John_Doe</p>
+                                      </div>
+                                    </div>
+                                    <div class="ms-5 ms-sm-0">
+                                      <button class="btn btn-outline-secondary me-1">Extinguish</button>
+                                      <button class="btn btn-primary">Message</button>
+                                    </div>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="list-mail-3" role="tabpanel" aria-labelledby="list-mailtab-3">
+                        <div class="card table-card">
+                          <div class="card-body scroll-block">
+                            <div class="card">
+                              <div id="pending-request-container">
+                                <!-- Pending requests will be loaded here dynamically -->
+                                <div class="text-center p-4">
+                                  <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                  </div>
+                                  <p class="mt-3">Loading pending requests...</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="list-mail-4" role="tabpanel" aria-labelledby="list-mailtab-4">
+                        <div class="card table-card">
+                          <div class="card-body scroll-block">
+                            <div class="card">
+                              <div id="invited-request-container">
+                                <!-- Invited requests will be loaded here dynamically -->
+                                <div class="text-center p-4">
+                                  <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                  </div>
+                                  <p class="mt-3">Loading sent invitations...</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ sample-page ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <footer class="pc-footer">
+      <div class="footer-wrapper container-fluid">
+        <div class="row">
+          <div class="col my-1">
+            <p class="m-0">©2025 Blaze Inc<a href="#" target="_blank"></a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Include theme settings -->
+    <div id="theme-settings-container"></div>
+
+    <!-- Required Js -->
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <script src="../assets/js/fonts/custom-font.js"></script>
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/pcoded.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+
+    <!-- Load components -->
+    <script src="components/layout.js"></script>
+    <script>
+      // Load sidebar
+      fetch('components/sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('sidebar-container').innerHTML = data;
+          // Initialize feather icons after loading sidebar
+          feather.replace();
+        });
+      
+      // Load header
+      fetch('components/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-container').innerHTML = data;
+          // Initialize feather icons after loading header
+          feather.replace();
+        });
+      
+      // Load theme settings
+      fetch('components/theme-settings.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('theme-settings-container').innerHTML = data;
+          // Initialize feather icons after loading theme settings
+          feather.replace();
+        })
+        .then(() => {
+          // After all components are loaded, update user profile
+          updateUserProfile();
+        });
+    </script>
+
+    <!-- [Page Specific JS] start -->
+    <!-- quill js -->
+    <script src="../assets/js/plugins/quill.min.js"></script>
+    <script>
+      (function () {
+        var quill = new Quill('#pc-quil-1', {
+          modules: {
+            toolbar: [
+              [
+                {
+                  header: [1, 2, false]
+                }
+              ],
+              ['bold', 'italic', 'underline'],
+              ['image', 'code-block']
+            ]
+          },
+          placeholder: 'Type your text here...',
+          theme: 'snow'
+        });
+        var quill = new Quill('#pc-quil-2', {
+          modules: {
+            toolbar: [
+              [
+                {
+                  header: [1, 2, false]
+                }
+              ],
+              ['bold', 'italic', 'underline'],
+              ['image', 'code-block']
+            ]
+          },
+          placeholder: 'Type your text here...',
+          theme: 'snow'
+        });
+      })();
+      // scroll-block
+      var tc = document.querySelectorAll('.scroll-block');
+      for (var t = 0; t < tc.length; t++) {
+        new SimpleBar(tc[t]);
+      }
+      var toggle_mail_list = document.querySelector('#toggle-mail-list-height');
+      var toggle_mail_wrapper = document.querySelector('.mail-wrapper');
+      if (toggle_mail_list) {
+        toggle_mail_list.addEventListener('click', function () {
+          if (toggle_mail_wrapper.classList.contains('mini-mail-list')) {
+            toggle_mail_wrapper.classList.remove('mini-mail-list');
+          } else {
+            toggle_mail_wrapper.classList.add('mini-mail-list');
+          }
+        });
+      }
+
+      var toggle_mail_dialog = document.querySelector('#toggle_mail_dialog');
+      var toggle_mail_modal = document.querySelector('.compose_mail_modal');
+      if (toggle_mail_dialog) {
+        toggle_mail_dialog.addEventListener('click', function () {
+          if (toggle_mail_modal.classList.contains('modal-pos-down')) {
+            toggle_mail_modal.classList.remove('modal-pos-down');
+          } else {
+            toggle_mail_modal.classList.add('modal-pos-down');
+          }
+        });
+      }
+
+      var tc = document.querySelectorAll('.mail-table tr td:nth-child(2), .mail-table tr td:nth-child(3)');
+      for (var t = 0; t < tc.length; t++) {
+        tc[t].addEventListener('click', function () {
+          active_details('a[id="list-mailtab-details"]');
+        });
+      }
+
+      document.querySelector('#mail-back_inbox') && document.querySelector('#mail-back_inbox').addEventListener('click', function () {
+        active_details('a[id="list-mailtab-1"]');
+      });
+      function active_details(tab_name) {
+        var someTabTriggerEl = document.querySelector(tab_name);
+        if (someTabTriggerEl) {
+          var actTab = new bootstrap.Tab(someTabTriggerEl);
+          actTab.show();
+        }
+      }
+    </script>
+    <!-- [Page Specific JS] end -->
+    
+    <!-- Connections JS -->
+    <script src="../assets/js/connections.js"></script>
+    <!-- Notifications handler JS -->
+    <script src="../assets/js/notifications-handler.js"></script>
+
+    <!-- Initialize notifications -->
+    <script>
+      // Initialize notifications when DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        // Check if the initNotifications function is available
+        if (typeof initNotifications === 'function') {
+          // Call the initNotifications function from notifications-handler.js
+          initNotifications();
+        } else {
+          console.warn('initNotifications function not found - notifications may not load properly');
+        }
+        
+        // Force load notifications on page load after a small delay
+        setTimeout(function() {
+          if (typeof loadNotifications === 'function') {
+            loadNotifications(true);
+          }
+        }, 1000);
+      });
+    </script>
+
+    <!-- Fix for "hiiii" text -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Function to remove the "hiiii" text and replace it with a more appropriate message
+        function fixHiText() {
+          // Find paragraphs with the "hiiii" text
+          document.querySelectorAll('p').forEach(p => {
+            if (p.textContent.trim() === 'hiiii') {
+              p.innerHTML = 'Check out the <a href="/magic-suggest.html">Magic Suggest</a> feature to find and connect with people!';
+            }
+          });
+        }
+        
+        // Run immediately
+        fixHiText();
+        
+        // Also run after a delay to catch dynamically added content
+        setTimeout(fixHiText, 1000);
+        
+        // Create a MutationObserver to watch for DOM changes
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+              fixHiText();
+            }
+          });
+        });
+        
+        // Start observing the document with the configured parameters
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    </script>
+
+    <!-- Debug buttons removed -->
+
+    <!-- User Profile View Modal -->
+    <div class="modal fade" id="profileViewModal" tabindex="-1" aria-labelledby="profileViewModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="mb-0">Profile Details</h5>
+            <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+              <i class="ti ti-x f-20"></i>
+            </a>
+                </div>
+          <div class="modal-body" id="profileViewContainer">
+            <div class="text-center" id="profileLoadingSpinner">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+              <p class="mt-2">Loading user profile...</p>
+                </div>
+            <div id="profileViewContent" style="display: none;">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="card">
+                    <div class="card-body position-relative">
+                      <div class="text-center mt-3">
+                        <div class="chat-avtar d-inline-flex mx-auto">
+                          <img id="profileViewAvatar" class="rounded-circle img-fluid wid-60" 
+                               src="../assets/images/user/blank-avatar.png" 
+                               alt="User Avatar" 
+                               onerror="this.onerror=null; this.src='../assets/images/user/blank-avatar.png';"
+                               data-original-src=""
+                               style="width:60px;height:60px;object-fit:cover;">
+              </div>
+                        <h5 id="profileViewName" class="mb-0">Loading...</h5>
+                        <p id="profileViewStudy" class="text-muted text-sm">Year of Study</p>
+                        <hr class="my-3 border border-secondary-subtle">
+                        <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                          <i class="ti ti-map-pin me-2"></i>
+                          <p id="profileViewLocation" class="mb-0">Location</p>
+            </div>
+                </div>
+                </div>
+                </div>
+                  <div class="card">
+                    <div class="card-header d-inline-flex align-items-center justify-content-space-between">
+                      <h5 id="profileViewCoFounders" style="margin-left:15px;">No of Co-Founders: 0</h5>
+              </div>
+            </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Skills</h5>
+          </div>
+                    <div class="card-body">
+                      <div class="row align-items-center mb-3">
+                        <p class="mb-1 text-muted">Hard Skills</p>
+                        <div class="col-sm-12 mb-2 mb-sm-0">
+                          <p id="profileViewTechSkills" class="mb-0">Loading...</p>
+            </div>
+            </div>
+                      <div class="row align-items-center mb-3">
+                        <p class="mb-1 text-muted">Soft Skills</p>
+                        <div class="col-sm-12 mb-2 mb-sm-0">
+                          <p id="profileViewSoftSkills" class="mb-0">Loading...</p>
+                </div>
+                </div>
+              </div>
+              </div>
+              </div>
+                <div class="col-lg-8">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>About me</h5>
+                </div>
+                    <div class="card-body">
+                      <p id="profileViewBio" class="mb-0">Loading...</p>
+                </div>
+              </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Personal Details</h5>
+              </div>
+                    <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0 pt-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Full Name</p>
+                              <p id="profileViewFullName" class="mb-0">Loading...</p>
+                </div>
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Username</p>
+                              <p id="profileViewUsername" class="mb-0">Loading...</p>
+                </div>
+                </div>
+                        </li>
+                        <li class="list-group-item px-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Date of Birth</p>
+                              <p id="profileViewDob" class="mb-0">Loading...</p>
+                </div>
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Gender</p>
+                              <p id="profileViewGender" class="mb-0">Loading...</p>
+                  </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item px-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">State</p>
+                              <p id="profileViewState" class="mb-0">Loading...</p>
+                            </div>
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">City</p>
+                              <p id="profileViewCity" class="mb-0">Loading...</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item px-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Zip Code</p>
+                              <p id="profileViewZip" class="mb-0">Loading...</p>
+                            </div>
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Address</p>
+                              <p id="profileViewAddress" class="mb-0">Loading...</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item px-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Pronouns</p>
+                              <p id="profileViewPronouns" class="mb-0">Loading...</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Education</h5>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0 pt-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Year of Study</p>
+                              <p id="profileViewYearOfStudy" class="mb-0">Loading...</p>
+                            </div>
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Institute</p>
+                              <p id="profileViewInstitute" class="mb-0">Loading...</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item px-0 pb-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Area of Study</p>
+                              <p id="profileViewAreaOfStudy" class="mb-0">Loading...</p>
+                            </div>
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Major Type</p>
+                              <p id="profileViewMajorType" class="mb-0">Loading...</p>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="list-group-item px-0 pb-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Major</p>
+                              <p id="profileViewMajor" class="mb-0">Loading...</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <h5>Interest/industry</h5>
+                    </div>
+                    <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0 pt-0">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">My Interests</p>
+                              <p id="profileViewInterests" class="mb-0">Loading...</p>
+                            </div>
+                            <div class="col-md-6">
+                              <p class="mb-1 text-muted">Looking for specific interest</p>
+                              <p id="profileViewLookingFor" class="mb-0">Loading...</p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="profileViewError" class="alert alert-danger" style="display: none;">
+              Error loading profile. Please try again.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Debug functions removed
+    </script>
+
+    <!-- Fix for "hiiii" text -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Function to remove the "hiiii" text and replace it with a more appropriate message
+        function fixHiText() {
+          // Find paragraphs with the "hiiii" text
+          document.querySelectorAll('p').forEach(p => {
+            if (p.textContent.trim() === 'hiiii') {
+              p.innerHTML = 'Check out the <a href="/magic-suggest.html">Magic Suggest</a> feature to find and connect with people!';
+            }
+          });
+        }
+        
+        // Run immediately
+        fixHiText();
+        
+        // Also run after a delay to catch dynamically added content
+        setTimeout(fixHiText, 1000);
+        
+        // Create a MutationObserver to watch for DOM changes
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+              fixHiText();
+            }
+          });
+        });
+        
+        // Start observing the document with the configured parameters
+        observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Function to load user profile images
+        function loadConnectionImages() {
+          // Get all connection profile images
+          document.querySelectorAll('.media.align-items-center img').forEach(img => {
+            // Only process images that have a src attribute and aren't the default avatar
+            if (img.getAttribute('src') && !img.getAttribute('src').includes('blank-avatar.png')) {
+              // Use the loadUserProfileImage function from layout.js
+              loadUserProfileImage(img, img.getAttribute('src'));
+            }
+          });
+        }
+
+        // Call the function after a short delay to ensure DOM is ready
+        setTimeout(loadConnectionImages, 500);
+
+        // Also call it when new content is loaded (for dynamic content)
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+              loadConnectionImages();
+            }
+          });
+        });
+
+        // Start observing the document with the configured parameters
+        observer.observe(document.body, { 
+          childList: true, 
+          subtree: true 
+        });
+      });
+    </script>
+  </body>
+  <!-- [Body] end -->
+</html> 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Blaze</title>
+    
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <!-- [Font] Family -->
+    <link rel="stylesheet" href="assets/fonts/inter/inter.css" id="main-font-link" />
+
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="assets/fonts/tabler-icons.min.css" />
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="assets/fonts/feather.css" />
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="assets/fonts/fontawesome.css" />
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="assets/fonts/material.css" />
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="assets/css/style.css" id="main-style-link" />
+    <link rel="stylesheet" href="assets/css/style-preset.css" />
+</head>
+<body>
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <div class="auth-main">
+        <div class="auth-wrapper v1">
+            <div class="auth-form">
+                <div class="card my-5">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <a href="#"><img src="assets/images/logo-dark.svg" alt="img"></a>
+                        </div>
+                        <div class="saprator my-3">
+                            <span>Admin Access</span>
+                        </div>
+                        <h4 class="text-center f-w-500 mb-3">Admin Login</h4>
+                        <form id="adminLoginForm">
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control" id="username" placeholder="Username" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            </div>
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-end mt-4">
+                                <h6 class="f-w-500 mb-0">Back to normal login?</h6>
+                                <a href="/login" class="link-primary">User Login</a>
+                            </div>
+                        </form>
+                        <div id="errorMessage" class="alert alert-danger mt-3" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Required Js -->
+    <script src="assets/js/plugins/popper.min.js"></script>
+    <script src="assets/js/plugins/simplebar.min.js"></script>
+    <script src="assets/js/plugins/bootstrap.min.js"></script>
+    <script src="assets/js/fonts/custom-font.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/pcoded.js"></script>
+    <script src="assets/js/plugins/feather.min.js"></script>
+    
+    <script>
+        // Load theme settings
+        fetch('components/theme-settings.html')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('beforeend', data);
+                // Initialize feather icons after loading theme settings
+                feather.replace();
+            });
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Login form submitted');
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            console.log('Attempting login with username:', username);
+            errorMessage.style.display = 'none';
+            
+            // Send login request to the server
+            fetch('/api/auth/admin-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    return response.json().then(err => { 
+                        console.error('Login error:', err);
+                        throw err; 
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Login successful, received data:', data);
+                
+                // Store the token and session ID in localStorage
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('sessionId', data.sessionId);
+                localStorage.setItem('userType', 'admin');
+                
+                // Set cookies to handle server-side auth
+                document.cookie = `token=${data.token}; path=/; max-age=86400`;
+                document.cookie = `sessionId=${data.sessionId}; path=/; max-age=86400`;
+                
+                console.log('Stored authentication data in localStorage and cookies');
+                console.log('Redirecting to admin panel...');
+                
+                // Redirect to admin panel
+                window.location.href = '/admin-panel';
+            })
+            .catch(error => {
+                console.error('Login failed:', error);
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = error.message || 'Invalid username or password';
+            });
+        });
+    </script>
+</body>
+</html> 

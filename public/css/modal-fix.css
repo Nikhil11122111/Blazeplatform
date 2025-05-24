@@ -1,0 +1,33 @@
+/**
+ * Modal z-index fix
+ * Ensures modals appear above all other elements
+ */
+
+/* Target all file and image preview modals */
+.file-preview-modal,
+.image-preview-modal {
+  z-index: 10000000 !important; /* Extremely high z-index to appear above everything */
+}
+
+.file-preview-modal .modal-content,
+.image-preview-modal .modal-content {
+  z-index: 10000001 !important; /* Even higher than the modal overlay */
+}
+
+/* Force modals above any possible header/sidebar elements */
+body .pc-header { 
+  z-index: 1025 !important; /* Keep header at its default z-index */
+}
+
+body .pc-sidebar {
+  z-index: 1026 !important; /* Keep sidebar at its default z-index */
+}
+
+/* Ensure no other elements can have higher z-index */
+.pc-container,
+.pc-user-card,
+.dropdown-menu,
+.tooltip,
+.popover {
+  z-index: auto !important; /* Prevent these from going above our modals */
+}

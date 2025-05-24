@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.*   # For additional env files like .env.production, etc.
+
+# VS Code settings
+.vscode/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

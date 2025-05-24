@@ -1,0 +1,184 @@
+<!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header">
+      <a href="#" class="b-brand text-primary">
+        <!-- ========   Change your logo from here   ============ -->
+        <img src="../assets/images/logo-dark.svg" />
+        <span class="badge bg-light-success rounded-pill ms-2 "></span>
+      </a>
+    </div>
+    <div class="navbar-content">
+      <div class="card pc-user-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0">
+              <img src="../assets/images/user/blank-avatar.png" alt="user-image" class="user-avtar wid-45 rounded-circle" id="sidebar-profile-img" data-profile-picture />
+            </div>
+            <div class="flex-grow-1 ms-3 me-2">
+              <h6 class="mb-0" id="sidebar-user-name">Full Name</h6>
+              <small id="sidebar-user-study">Year of study</small>
+            </div>
+            <a class="btn btn-icon btn-link-secondary avtar-s" data-bs-toggle="collapse" href="#pc_sidebar_userlink">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-sort-outline"></use>
+              </svg>
+            </a>
+          </div>
+          <div class="collapse pc-user-links" id="pc_sidebar_userlink">
+            <div class="pt-3">
+              <a href="#!">
+                <i class="ti ti-lock"></i>
+                <span>Lock Screen</span>
+              </a>
+              <a href="#!" onclick="logout()">
+                <i class="ti ti-power"></i>
+                <span>Logout</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul class="pc-navbar">
+        <li class="pc-item pc-caption">
+          <label>Navigation</label>
+          <i class="ti ti-dashboard"></i>
+        </li>
+        <li class="pc-item">
+          <a href="dashboard.html" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-box-1"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Dashboard</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="profile.html" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-user-square"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Profile</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="magic-suggest.html" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-search-normal"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Magic Suggest</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="connections.html" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-user-add"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Connections</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="messages.html" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-message-2"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Messages</span>
+          </a>
+        </li>
+        <li class="pc-item pc-hasmenu" id="settings-menu-item">
+          <a href="#!" class="pc-link">
+            <span class="pc-micon">
+              <svg class="pc-icon">
+                <use xlink:href="#custom-setting-2"></use>
+              </svg>
+            </span>
+            <span class="pc-mtext">Settings</span>
+            <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+          </a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="change-password.html">Change Password</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->
+
+<!-- Add script to ensure consistent dropdown behavior -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize dropdown behavior for the Settings menu
+    const settingsMenuItem = document.getElementById('settings-menu-item');
+    if (settingsMenuItem) {
+      const pcLink = settingsMenuItem.querySelector('.pc-link');
+      
+      // Add click event listener to toggle the submenu
+      pcLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Toggle the open class to show/hide the submenu
+        settingsMenuItem.classList.toggle('pc-trigger');
+        
+        // Current page path
+        const currentPath = window.location.pathname;
+        
+        // If we're on the change-password page, make sure the menu is open
+        if (currentPath.includes('change-password.html')) {
+          settingsMenuItem.classList.add('pc-trigger');
+        }
+      });
+      
+      // Auto-open the menu if we're on the change-password page
+      if (window.location.pathname.includes('change-password.html')) {
+        settingsMenuItem.classList.add('pc-trigger');
+      }
+    }
+  });
+</script> 
+
+<style>
+  /* Mobile sidebar styles (moved from dashboard.html) - Removed as pcoded.js handles this */
+  /*
+  @media (max-width: 991px) {
+    .mob-nav-shown {
+      overflow: hidden;
+    }
+
+    .pc-sidebar.mob-sidebar-active {
+      transform: translateX(0);
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+
+    .pc-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1031;
+    }
+
+    .pc-sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1030;
+    }
+  }
+  */
+</style> 

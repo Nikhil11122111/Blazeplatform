@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Login Test</h1>
+    
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" value="admin">
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" value="admin@123">
+        
+        <button onclick="testAdminLogin()">Test Login</button>
+        <button onclick="checkLocalStorage()">Check LocalStorage</button>
+        <button onclick="clearLocalStorage()">Clear LocalStorage</button>
+    </div>
+    
+    <div id="result" class="result">Results will appear here...</div>
+    
+    <script>
+        function testAdminLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = 'Testing admin login...';
+            
+            fetch('/api/auth/admin-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                const status = response.status;
+                const statusText = response.statusText;
+                
+                return response.json().then(data => {
+                    return { status, statusText, data };
+                }).catch(err => {
+                    return { status, statusText, data: 'Error parsing JSON response' };
+                });
+            })
+            .then(result => {
+                resultDiv.innerHTML = `
+                    <h2>Response (${result.status} ${result.statusText}):</h2>
+                    <pre>${JSON.stringify(result.data, null, 2)}</pre>
+                `;
+                
+                if (result.status === 200 && result.data && result.data.token) {
+                    // Store in localStorage
+                    localStorage.setItem('token', result.data.token);
+                    localStorage.setItem('sessionId', result.data.sessionId);
+                    localStorage.setItem('userType', 'admin');
+                    
+                    // Check for cookies
+                    const cookies = document.cookie.split(';').reduce((acc, curr) => {
+                        const [key, value] = curr.trim().split('=');
+                        acc[key] = value;
+                        return acc;
+                    }, {});
+                    
+                    resultDiv.innerHTML += `
+                        <h3>Authentication Info:</h3>
+                        <p>Token stored in localStorage</p>
+                        <p>SessionId stored in localStorage</p>
+                        <p>Cookies found: ${Object.keys(cookies).join(', ') || 'None'}</p>
+                        <button onclick="checkAdminPanel()">Try Access Admin Panel</button>
+                    `;
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        }
+        
+        function checkLocalStorage() {
+            const resultDiv = document.getElementById('result');
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            const userType = localStorage.getItem('userType');
+            
+            // Check for cookies
+            const cookies = document.cookie.split(';').reduce((acc, curr) => {
+                if (curr.trim()) {
+                    const [key, value] = curr.trim().split('=');
+                    acc[key] = value;
+                }
+                return acc;
+            }, {});
+            
+            resultDiv.innerHTML = `
+                <h2>LocalStorage:</h2>
+                <p>Token: ${token ? 'Present' : 'Missing'}</p>
+                <p>SessionId: ${sessionId ? 'Present' : 'Missing'}</p>
+                <p>UserType: ${userType || 'Not set'}</p>
+                <h2>Cookies:</h2>
+                <p>${Object.keys(cookies).length ? Object.entries(cookies).map(([k,v]) => `${k}: ${v}`).join('<br>') : 'No cookies found'}</p>
+            `;
+        }
+        
+        function clearLocalStorage() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('sessionId');
+            localStorage.removeItem('userType');
+            
+            // Clear cookies
+            document.cookie = 'token=; Max-Age=-99999999; path=/';
+            document.cookie = 'sessionId=; Max-Age=-99999999; path=/';
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<p>LocalStorage and cookies cleared!</p>`;
+        }
+        
+        function checkAdminPanel() {
+            // Try to fetch the admin panel with appropriate headers
+            fetch('/admin-panel', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'X-Session-ID': localStorage.getItem('sessionId')
+                }
+            })
+            .then(response => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML += `
+                    <h3>Admin Panel Access:</h3>
+                    <p>Status: ${response.status} ${response.statusText}</p>
+                    <p>Test complete. Click below to try direct navigation:</p>
+                    <p><a href="/admin-panel" target="_blank">Open Admin Panel in New Tab</a></p>
+                `;
+            })
+            .catch(error => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML += `
+                    <h3>Admin Panel Access Error:</h3>
+                    <p>${error.message}</p>
+                `;
+            });
+        }
+    </script>
+</body>
+</html> 

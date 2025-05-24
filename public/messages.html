@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- [Head] start -->
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Blaze</title>
+    
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- [Font] Family -->
+    <link rel="stylesheet" href="../assets/fonts/inter/inter.css" id="main-font-link" />
+    <link rel="stylesheet" href="../assets/css/plugins/datepicker-bs5.min.css">
+
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css" />
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/feather.css" />
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/fontawesome.css" />
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/material.css" />
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+    <link rel="stylesheet" href="../assets/css/style-preset.css" />
+    <!-- [Choices CSS] -->
+    <link rel="stylesheet" href="../assets/css/plugins/select.bootstrap5.min.css" />
+    <!-- [Datepicker CSS] -->
+    <link rel="stylesheet" href="../assets/css/plugins/datepicker-bs5.min.css" />
+    <!-- [Chat CSS] -->
+    <link rel="stylesheet" href="../css/chat.css" />
+    <!-- [Modal Fix CSS] -->
+    <link rel="stylesheet" href="../css/modal-fix.css" />
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+  <body>
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+      <div class="loader-track">
+        <div class="loader-fill"></div>
+      </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <!-- Include sidebar -->
+    <div id="sidebar-container"></div>
+    
+    <!-- Include header -->
+    <div id="header-container"></div>
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+      <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="javascript: void(0)">Messages</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        <!-- Real-time chat status indicator -->
+        <div id="chat-mode-status" class="alert alert-info mb-2 mx-3" style="display: none;">
+          <div class="d-flex justify-content-between align-items-center">
+            <span>
+              <i class="ti ti-info-circle me-1"></i>
+              <span id="chat-mode-message">Checking real-time messaging status...</span>
+            </span>
+            <button id="enable-realtime-btn" class="btn btn-sm btn-primary">
+              <i class="ti ti-refresh me-1"></i>
+              Enable Real-time
+            </button>
+          </div>
+        </div>
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+          <!-- [ sample-page ] start -->
+          <div class="col-sm-12">
+            <div class="chat-wrapper">
+              <div class="offcanvas-md offcanvas-start chat-offcanvas" tabindex="-1" id="offcanvas_User_list">
+                <div class="offcanvas-header">
+                  <button class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvas_User_list" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                  <div id="chat-user_list" class="show collapse collapse-horizontal">
+                    <div class="chat-user_list">
+                      <div class="card overflow-hidden">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="mb-0">Messages <span id="conversation-count" class="badge bg-secondary rounded-circle">0</span></h5>
+                            <!-- Refresh button relocated beside the Messages label -->
+                            <button id="refresh-chats-btn" class="btn btn-primary btn-icon" title="Refresh Chats">
+                              <i class="ti ti-refresh"></i>
+                            </button>
+                          </div>
+                          <div class="form-search">
+                            <i class="ti ti-search"></i>
+                            <input type="search" class="form-control" placeholder="Search Friends">
+                          </div>
+                        </div>
+                        <div class="scroll-block">
+                          <div class="card-body p-0">
+                            <div class="list-group list-group-flush">
+                              <!-- Conversations will be loaded here -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-content">
+                <div class="card mb-0">
+                  <div class="card-header p-3">
+                    <div class="d-sm-flex align-items-center">
+                      <ul class="list-inline me-auto mb-0">
+                        <li class="list-inline-item align-bottom">
+                          <a href="#" class="d-md-none avtar avtar-s btn-link-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_User_list">
+                            <i class="ti ti-menu-2 f-18"></i>
+                          </a>
+                          <a href="#" class="d-none d-md-inline-flex avtar avtar-s btn-link-secondary" data-bs-toggle="collapse" data-bs-target="#chat-user_list">
+                            <i class="ti ti-menu-2 f-18"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <div class="media align-items-center">
+                            <div class="chat-avtar">
+                              <img class="rounded-circle img-fluid wid-40" src="../assets/images/user/blank-avatar.png" alt="User image">
+                            </div>
+                            <div class="media-body mx-3">
+                              <h5 class="mb-0">Select a conversation</h5>
+                              <span class="text-sm text-muted">Choose a friend to start chatting</span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="list-inline ms-auto mb-0">
+                        <li class="list-inline-item">
+                          <a href="#" class="d-md-none avtar avtar-s btn-link-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_User_info">
+                            <i class="ti ti-info-circle f-18"></i>
+                          </a>
+                          <a href="#" class="d-none d-md-inline-flex avtar avtar-s btn-link-secondary" data-bs-toggle="collapse" data-bs-target="#chat-user_info">
+                            <i class="ti ti-info-circle f-18"></i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="scroll-block chat-message">
+                    <div class="card-body">
+                      <!-- Messages will be loaded here -->
+                      <div class="text-center p-4">
+                        <p class="text-muted">Select a conversation to start chatting</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer py-2 px-3">
+                    <textarea class="form-control border-0 shadow-none px-0" placeholder="Type a Message" rows="2"></textarea>
+                    <hr class="my-2">
+                    <div class="d-sm-flex align-items-center">
+                      <ul class="list-inline me-auto mb-0">
+                        <li class="list-inline-item">
+                          <a href="#" class="avtar avtar-xs btn-link-secondary">
+                            <i class="ti ti-paperclip f-18"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a href="#" class="avtar avtar-xs btn-link-secondary">
+                            <i class="ti ti-photo f-18"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a href="#" class="avtar avtar-xs btn-link-secondary">
+                            <i class="ti ti-mood-smile f-18"></i>
+                          </a>
+                        </li>
+                      </ul>
+                      <ul class="list-inline ms-auto mb-0">
+                        <li class="list-inline-item">
+                          <a href="#" class="avtar avtar-s btn-link-primary">
+                            <i class="ti ti-send f-18"></i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="offcanvas-md offcanvas-end chat-offcanvas" tabindex="-1" id="offcanvas_User_info">
+                <div class="offcanvas-header">
+                  <button class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvas_User_info" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                  <div id="chat-user_info" class="collapse collapse-horizontal">
+                    <div class="chat-user_info">
+                      <div class="card">
+                        <div class="text-center card-body position-relative pb-0">
+                          <div class="position-absolute end-0 top-0 p-3 d-none d-md-inline-flex">
+                            <a href="#" class="avtar avtar-xs btn-link-danger btn-pc-default" data-bs-toggle="collapse" data-bs-target="#chat-user_info" aria-expanded="true">
+                              <i class="ti ti-x f-16"></i>
+                            </a>
+                          </div>
+                          <div class="chat-avtar d-inline-flex mx-auto position-relative">
+                            <img class="rounded-circle img-fluid wid-100" src="../assets/images/user/blank-avatar.png" alt="User image" style="display: block;">
+                          </div>
+                          <div class="mt-3 mb-2">
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userProfileModal">
+                              View Full Profile
+                            </button>
+                          </div>
+                          <h5 class="mb-0 user-fullname">Profile</h5>
+                          <p class="text-muted text-sm user-username">@username</p>
+                        </div>
+                        <!-- Sidebar content area removed -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ sample-page ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <footer class="pc-footer">
+      <div class="footer-wrapper container-fluid">
+        <div class="row">
+          <div class="col my-1">
+            <p class="m-0">©2025 Blaze Inc<a href="#" target="_blank"></a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Include theme settings -->
+    <div id="theme-settings-container"></div>
+
+    <!-- Required Js -->
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <script src="../assets/js/fonts/custom-font.js"></script>
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/pcoded.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+
+    <!-- Load components -->
+    <script src="components/layout.js"></script>
+    <script>
+      // Load sidebar
+      fetch('components/sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('sidebar-container').innerHTML = data;
+          // Initialize feather icons after loading sidebar
+          feather.replace();
+        });
+      
+      // Load header
+      fetch('components/header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-container').innerHTML = data;
+          // Initialize feather icons after loading header
+          feather.replace();
+        });
+      
+      // Load theme settings
+      fetch('components/theme-settings.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('theme-settings-container').innerHTML = data;
+          // Initialize feather icons after loading theme settings
+          feather.replace();
+        })
+        .then(() => {
+          // After all components are loaded, update user profile
+          updateUserProfile();
+        });
+    </script>
+    
+    <!-- Socket.IO Client -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- Chat System Scripts -->
+    <script src="../js/chat-encryption.js"></script>
+    <script src="../js/chat-socket.js"></script>
+    <script src="../js/chat-api.js"></script>
+    <script src="../js/chat-ui.js"></script>
+    <script src="../js/modal-fix.js"></script>
+    <!-- Chat System Fixes -->
+    <script src="../js/chat-fixes.js"></script>
+    <!-- Friends Filter -->
+    <script src="../js/friends-filter.js"></script>
+    
+    <!-- [Page Specific JS] start -->
+    <script>
+      // Initialize scroll-block for chat interface
+      var tc = document.querySelectorAll('.scroll-block');
+      for (var t = 0; t < tc.length; t++) {
+        new SimpleBar(tc[t]);
+      }
+    </script>
+    <!-- [Page Specific JS] end -->
+    
+    <!-- Notifications Handler JS -->
+    <script src="../assets/js/notifications-handler.js"></script>
+    <script>
+      // Initialize notifications when DOM is fully loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('Initializing notifications system on messages page');
+        
+        // Check if the initNotifications function is available
+        if (typeof initNotifications === 'function') {
+          // Call the initNotifications function from notifications-handler.js
+          initNotifications();
+        } else {
+          console.warn('initNotifications function not found - notifications may not load properly');
+        }
+        
+        // Force load notifications on page load after a small delay
+        setTimeout(function() {
+          if (typeof loadNotifications === 'function') {
+            console.log('Force loading notifications...');
+            loadNotifications(true);
+          }
+        }, 1000);
+        
+        // Apply fixes for chat display issues after page loads
+        setTimeout(function() {
+          if (typeof window.fixChatDisplayIssues === 'function') {
+            window.fixChatDisplayIssues();
+          }
+          
+          // Also force enable real-time chat if the function is available
+          if (typeof window.forceEnableRealTimeChat === 'function') {
+            console.log('Forcing real-time chat mode...');
+            window.forceEnableRealTimeChat();
+          }
+        }, 2000);
+      });
+    </script>
+
+    <!-- Profile Modal Enhancement Script -->
+    <script>
+      // Setup enhanced user profile modal functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get profile modal element
+        const userProfileModal = document.getElementById('userProfileModal');
+        
+        if (userProfileModal) {
+          // Add event listener for when modal is about to be shown
+          userProfileModal.addEventListener('show.bs.modal', function() {
+            if (!currentConversation || !currentConversation.otherUser) {
+              return;
+            }
+            
+            const userId = currentConversation.otherUser._id;
+            
+            // Show loading indicator
+            const modalBody = userProfileModal.querySelector('.modal-body');
+            if (modalBody) {
+              const loadingHtml = `
+                <div class="text-center p-5" id="profile-loading">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading profile...</span>
+                  </div>
+                  <p class="mt-3">Loading complete profile data...</p>
+                </div>
+              `;
+              // Add loading indicator before existing content
+              modalBody.insertAdjacentHTML('afterbegin', loadingHtml);
+            }
+            
+            // Use the same approach as magic-suggest.html
+            fetchUserProfileData(userId)
+              .then(userData => {
+                // Remove loading indicator
+                const loadingElement = document.getElementById('profile-loading');
+                if (loadingElement) {
+                  loadingElement.remove();
+                }
+                
+                // Update user profile with the data
+                updateUserProfileInfo(userData);
+              })
+              .catch(error => {
+                console.error('Error fetching profile data:', error);
+                
+                // Remove loading indicator
+                const loadingElement = document.getElementById('profile-loading');
+                if (loadingElement) {
+                  loadingElement.remove();
+                }
+                
+                // Show error
+                if (modalBody) {
+                  const errorHtml = `
+                    <div class="alert alert-danger" id="profile-error">
+                      Failed to fetch complete profile data. Using cached data instead.
+                    </div>
+                  `;
+                  modalBody.insertAdjacentHTML('afterbegin', errorHtml);
+                  
+                  // Remove error message after 3 seconds
+                  setTimeout(() => {
+                    const errorElement = document.getElementById('profile-error');
+                    if (errorElement) {
+                      errorElement.remove();
+                    }
+                  }, 3000);
+                }
+                
+                // Fall back to using existing user data
+                updateUserProfileInfo(currentConversation.otherUser);
+              });
+          });
+        }
+      });
+      
+      // Helper function to clean ID values
+      function cleanIdValue(id) {
+        if (id === null || id === undefined) {
+          return '';
+        }
+        
+        // If it's an object with _id property, use that
+        if (typeof id === 'object' && id !== null) {
+          if (id._id) {
+            return String(id._id).replace(/^["']|["']$/g, '');
+          } else if (id.id) {
+            return String(id.id).replace(/^["']|["']$/g, '');
+          }
+        }
+        
+        if (typeof id === 'string') {
+          // Remove any quotes that might be present
+          return id.replace(/^["']|["']$/g, '');
+        }
+        
+        // Convert to string if not already
+        return String(id);
+      }
+      
+      // Function to fetch user profile data with multiple fallback strategies
+      async function fetchUserProfileData(userId) {
+        // Clean and normalize the userId
+        const userIdStr = cleanIdValue(userId);
+        console.log('Getting data for user ID:', userIdStr);
+        
+        // Get auth tokens
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const sessionId = localStorage.getItem('sessionId') || sessionStorage.getItem('sessionId');
+        
+        // Strategy 1: Try direct API call to get user by ID
+        try {
+          console.log('Fetching user data from primary API endpoint:', userIdStr);
+          const response = await fetch(`/api/users/${userIdStr}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': `Bearer ${token}`,
+              'X-Session-ID': sessionId
+            }
+          });
+          
+          if (!response.ok) {
+            console.warn(`API returned status ${response.status} for user ID: ${userIdStr}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          
+          const result = await response.json();
+          if (result.success && result.data) {
+            console.log('Successfully fetched user data from primary API endpoint');
+            return result.data;
+          } else {
+            console.log('API returned success but no data, using result directly:', result);
+            return result;
+          }
+        } catch (error) {
+          console.warn('Error fetching from primary API endpoint:', error.message);
+          
+          // Strategy 2: Try profile data endpoint
+          try {
+            console.log('Trying fallback API endpoint for user ID:', userIdStr);
+            const fallbackResponse = await fetch(`/api/profile/data/${userIdStr}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
+                'X-Session-ID': sessionId
+              }
+            });
+            
+            if (!fallbackResponse.ok) {
+              console.warn(`Fallback API returned status ${fallbackResponse.status}`);
+              throw new Error(`Fallback API failed: ${fallbackResponse.status}`);
+            }
+            
+            const fallbackData = await fallbackResponse.json();
+            if (fallbackData) {
+              console.log('Successfully fetched profile data from fallback API');
+              return fallbackData;
+            } else {
+              throw new Error('Fallback API returned empty data');
+            }
+          } catch (fallbackError) {
+            console.error('Fallback API also failed:', fallbackError);
+            
+            // Strategy 3: Try to find the user in the full users list
+            try {
+              console.log('Attempting to fetch all users as final fallback');
+              const usersResponse = await fetch('/api/users', {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+                  'X-Session-ID': sessionId
+                }
+              });
+              
+              if (usersResponse.ok) {
+                const users = await usersResponse.json();
+                console.log(`Fetched ${users.length} users, searching for ID: ${userIdStr}`);
+                
+                // Use string comparison to avoid type mismatches
+                const fullUser = users.find(user => String(user._id) === userIdStr);
+                if (fullUser) {
+                  console.log('Found user in full users list');
+                  return fullUser;
+                }
+              }
+            } catch (listError) {
+              console.error('Error fetching users list:', listError);
+            }
+            
+            // If all else fails, throw the original error
+            throw error;
+          }
+        }
+      }
+    </script>
+
+    <!-- User Profile Modal -->
+    <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="mb-0">Profile Details</h5>
+            <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+              <i class="ti ti-x f-20"></i>
+            </a>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-body position-relative">
+                    <div class="text-center mt-3">
+                      <div class="chat-avtar d-inline-flex mx-auto">
+                        <img class="rounded-circle img-fluid wid-60 modal-user-avatar" src="/assets/images/user/blank-avatar.png" alt="User image" onerror="this.onerror=null; this.src='../assets/images/user/blank-avatar.png';">
+                      </div>
+                      <h5 class="mb-0 modal-user-name">User Name</h5>
+                      <p class="text-muted text-sm modal-user-username">@username</p>
+                      <hr class="my-3 border border-secondary-subtle">
+                      <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                        <i class="ti ti-map-pin me-2"></i>
+                        <p class="mb-0 modal-user-location">Location not specified</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header d-inline-flex align-items-center justify-content-space-between">
+                    <h5 style="margin-left:15px;">No of Co-Founders: <span class="modal-cofounders-count">1</span></h5>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Skills</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row align-items-center mb-3">
+                      <p class="mb-1 text-muted">Hard Skills</p>
+                      <div class="col-sm-12 mb-2 mb-sm-0">
+                        <p class="mb-0 modal-user-hard-skills"></p>
+                      </div>
+                    </div>
+                    <div class="row align-items-center mb-3">
+                      <p class="mb-1 text-muted">Soft Skills</p>
+                      <div class="col-sm-12 mb-2 mb-sm-0">
+                        <p class="mb-0 modal-user-soft-skills"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>About me</h5>
+                  </div>
+                  <div class="card-body">
+                    <p class="mb-0 modal-user-bio">No bio available</p>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Personal Details</h5>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Full Name</p>
+                            <p class="mb-0 modal-user-fullname">User Name</p>
+                          </div>
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Username</p>
+                            <p class="mb-0 modal-user-username-detail">username</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Date of Birth</p>
+                            <p class="mb-0 modal-user-dob">N/A</p>
+                          </div>
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Gender</p>
+                            <p class="mb-0 modal-user-gender">N/A</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">State</p>
+                            <p class="mb-0 modal-user-state">N/A</p>
+                          </div>
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">City</p>
+                            <p class="mb-0 modal-user-city">N/A</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Zip Code</p>
+                            <p class="mb-0 modal-user-zipcode">N/A</p>
+                          </div>
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Address</p>
+                            <p class="mb-0 modal-user-address">N/A</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Pronouns</p>
+                            <p class="mb-0 modal-user-pronouns">N/A</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Education</h5>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Year of Study</p>
+                            <p class="mb-0 modal-user-study-year">N/A</p>
+                          </div>
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Institute</p>
+                            <p class="mb-0 modal-user-institute">N/A</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0 pb-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Area of Study</p>
+                            <p class="mb-0 modal-user-study-area">N/A</p>
+                          </div>
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Major Type</p>
+                            <p class="mb-0 modal-user-major-type">N/A</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item px-0 pb-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Major</p>
+                            <p class="mb-0 modal-user-major">N/A</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Interest/industry</h5>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item px-0 pt-0">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">My Interests</p>
+                            <p class="mb-0 modal-user-interests">-</p>
+                          </div>
+                          <div class="col-md-6">
+                            <p class="mb-1 text-muted">Looking for specific interest</p>
+                            <p class="mb-0 modal-user-looking-for">-</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <!-- [Body] end -->
+</html> 

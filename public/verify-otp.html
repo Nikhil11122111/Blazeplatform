@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting - Blaze Co-founder Platform</title>
+    <meta http-equiv="refresh" content="0;url=/login">
+</head>
+<body>
+    <h1>Redirecting to Login Page</h1>
+    <p>You are being redirected to the login page. If you are not redirected automatically, <a href="/login">click here</a>.</p>
+    <script>
+        // Load theme settings
+        fetch('/components/theme-settings')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('beforeend', data);
+                // Initialize feather icons after loading theme settings
+                feather.replace();
+            });
+
+        window.location.href = '/login';
+    </script>
+</body>
+</html> 

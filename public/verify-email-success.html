@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verified - Blaze Co-founder Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .success-icon {
+            color: #4CAF50;
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        .success-message {
+            background-color: #E8F5E9;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .redirect-message {
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .login-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blaze Co-founder Platform</h1>
+    
+    <div class="success-icon">✓</div>
+    
+    <div class="success-message">
+        <h2>Email Verified Successfully!</h2>
+        <p>Your email has been verified. You can now log in to your account.</p>
+    </div>
+    
+    <div class="redirect-message">
+        <p>You will be redirected to the login page in <span id="countdown">5</span> seconds...</p>
+    </div>
+    
+    <a href="/login" class="login-button">Go to Login</a>
+    
+    <script>
+        // Load theme settings
+        fetch('/components/theme-settings')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('beforeend', data);
+                // Initialize feather icons after loading theme settings
+                feather.replace();
+            });
+
+        // Countdown timer
+        let seconds = 5;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdown = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = seconds;
+            
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                window.location.href = '/login';
+            }
+        }, 1000);
+        
+        // Check if there's a token in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        if (token) {
+            // Verify the email with the token
+            fetch(`http://localhost:5001/api/auth/verify-email/${token}`)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => {
+                            throw new Error(data.message || 'Verification failed');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Success is already shown by default
+                    console.log('Email verified successfully:', data);
+                })
+                .catch(error => {
+                    document.querySelector('.success-message').innerHTML = `
+                        <h2>Verification Failed</h2>
+                        <p>${error.message || 'An error occurred during verification. Please try again later.'}</p>
+                    `;
+                    document.querySelector('.redirect-message').style.display = 'none';
+                });
+        }
+    </script>
+</body>
+</html> 

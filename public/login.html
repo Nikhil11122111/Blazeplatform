@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Blaze Co-founder Platform</title>
+    
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <!-- [Font] Family -->
+    <link rel="stylesheet" href="assets/fonts/inter/inter.css" id="main-font-link" />
+
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="assets/fonts/tabler-icons.min.css" />
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="assets/fonts/feather.css" />
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="assets/fonts/fontawesome.css" />
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="assets/fonts/material.css" />
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="assets/css/style.css" id="main-style-link" />
+    <link rel="stylesheet" href="assets/css/style-preset.css" />
+    <style>
+        #login-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            display: inline-block;
+            border: 4px solid transparent;
+            border-radius: 50%;
+            border-top: 4px solid var(--bs-primary);
+            border-right: 4px solid var(--bs-primary);
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        .loader-text {
+            color: var(--bs-primary);
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 10px;
+            animation: fadeInOut 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Message styling */
+        #message {
+            transition: all 0.3s ease;
+        }
+
+        .alert {
+            border-left: 4px solid transparent;
+        }
+
+        .alert-success {
+            border-left-color: #198754;
+        }
+
+        .alert-danger {
+            border-left-color: #dc3545;
+        }
+
+        .form-group.error input {
+            border-color: #dc3545;
+        }
+
+        .error-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 4px;
+        }
+
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Add loader right after body tag -->
+    <div id="login-loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Verifying your credentials...</div>
+        </div>
+    </div>
+
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <div class="auth-main">
+        <div class="auth-wrapper v1">
+            <div class="auth-form">
+                <div class="card my-5">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <a href="#"><img src="assets/images/logo-dark.svg" alt="img"></a>
+                        </div>
+                        <div class="saprator my-3">
+                            <span></span>
+                        </div>
+                        <h4 class="text-center f-w-500 mb-3">Login with your email</h4>
+                        <form id="loginForm">
+                            <div class="form-group mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                            </div>
+                            <div class="d-flex mt-1 justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input input-primary" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label text-muted" for="rememberMe">Remember me?</label>
+                                </div>
+                                <h6 class="text-secondary f-w-400 mb-0"><a href="/forgot-password">Forgot Password?</a></h6>
+                            </div>
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-end mt-4">
+                                <h6 class="f-w-500 mb-0">Don't have an Account?</h6>
+                                <a href="/register" class="link-primary">Create Account</a>
+                            </div>
+                        </form>
+                        <div id="message" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+    <!-- Required Js -->
+    <script src="assets/js/plugins/popper.min.js"></script>
+    <script src="assets/js/plugins/simplebar.min.js"></script>
+    <script src="assets/js/plugins/bootstrap.min.js"></script>
+    <script src="assets/js/fonts/custom-font.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/pcoded.js"></script>
+    <script src="assets/js/plugins/feather.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Load theme settings
+        fetch('components/theme-settings.html')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('beforeend', data);
+                // Initialize feather icons after loading theme settings
+                feather.replace();
+            });
+
+        // Email validation function
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Function to show error for a field
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const formGroup = field.closest('.form-group');
+            formGroup.classList.add('error');
+            
+            // Remove existing error feedback if any
+            const existingFeedback = formGroup.querySelector('.error-feedback');
+            if (existingFeedback) {
+                existingFeedback.remove();
+            }
+            
+            // Add new error feedback
+            const feedback = document.createElement('div');
+            feedback.className = 'error-feedback';
+            feedback.textContent = message;
+            formGroup.appendChild(feedback);
+            
+            // Add shake animation
+            field.classList.add('shake');
+            setTimeout(() => field.classList.remove('shake'), 500);
+        }
+
+        // Function to clear error for a field
+        function clearFieldError(fieldId) {
+            const field = document.getElementById(fieldId);
+            const formGroup = field.closest('.form-group');
+            formGroup.classList.remove('error');
+            const feedback = formGroup.querySelector('.error-feedback');
+            if (feedback) {
+                feedback.remove();
+            }
+        }
+
+        // Add input event listeners for real-time validation
+        document.getElementById('email').addEventListener('input', function(e) {
+            if (this.value) {
+                if (!validateEmail(this.value)) {
+                    showFieldError('email', 'Please enter a valid email address');
+                } else {
+                    clearFieldError('email');
+                }
+            } else {
+                clearFieldError('email');
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('message');
+            const loader = document.getElementById('login-loader');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            // Clear previous errors
+            clearFieldError('email');
+            clearFieldError('password');
+            messageDiv.innerHTML = '';
+            
+            // Validate email
+            if (!validateEmail(email)) {
+                showFieldError('email', 'Please enter a valid email address');
+                return;
+            }
+            
+            // Show loader and disable submit button
+            loader.style.display = 'flex';
+            submitBtn.disabled = true;
+            const startTime = Date.now();
+            
+            try {
+                const response = await fetch('http://localhost:5001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                // Ensure loader shows for at least 2 seconds
+                const elapsedTime = Date.now() - startTime;
+                if (elapsedTime < 2000) {
+                    await new Promise(resolve => setTimeout(resolve, 2000 - elapsedTime));
+                }
+                
+                if (response.ok) {
+                    // Store token, session ID and user data
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('sessionId', data.sessionId);
+                    
+                    if (data.user && data.user._id) {
+                        localStorage.setItem('userId', data.user._id);
+                        if (data.user.username) {
+                            localStorage.setItem('username', data.user.username);
+                        }
+                        if (data.user.full_name) {
+                            localStorage.setItem('fullName', data.user.full_name);
+                        }
+                    }
+                    
+                    // Show success message briefly before redirect
+                    messageDiv.className = 'alert alert-success';
+                    messageDiv.innerHTML = '<p>Login successful! Redirecting...</p>';
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1000);
+                } else {
+                    if (data.needsVerification) {
+                        messageDiv.className = 'alert alert-danger';
+                        messageDiv.innerHTML = `
+                            <p>Please verify your email address first.</p>
+                            <p>Check your email for the verification link.</p>
+                            <p>If you haven't received the email, please check your spam folder.</p>
+                        `;
+                    } else if (response.status === 403 && data.message.includes('already logged in')) {
+                        messageDiv.className = 'alert alert-danger';
+                        messageDiv.innerHTML = `
+                            <p>You are already logged in on another device/browser.</p>
+                            <p>If this is not you, please <a href="#" onclick="logout()">logout</a> and change your password.</p>
+                        `;
+                    } else {
+                        // Handle specific error cases
+                        if (data.message.toLowerCase().includes('email')) {
+                            showFieldError('email', 'Email not found');
+                        } else if (data.message.toLowerCase().includes('password')) {
+                            showFieldError('password', 'Incorrect password');
+                        } else {
+                            messageDiv.className = 'alert alert-danger';
+                            messageDiv.innerHTML = `<p>Error: ${data.message}</p>`;
+                        }
+                    }
+                }
+            } catch (error) {
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.innerHTML = `<p>Error: Unable to connect to the server. Please try again later.</p>`;
+            } finally {
+                loader.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+    <div class="pct-c-btn">
+        <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_pc_layout">
+            <svg class="pc-icon">
+                <use xlink:href="#custom-setting-2"></use>
+            </svg>
+        </a>
+    </div>
+    <div class="offcanvas border-0 pct-offcanvas offcanvas-end" tabindex="-1" id="offcanvas_pc_layout">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Settings</h5>
+            <button type="button" class="btn btn-icon btn-link-danger" data-bs-dismiss="offcanvas" aria-label="Close"
+                ><i class="ti ti-x"></i
+            ></button>
+        </div>
+        <div class="pct-body" style="height: calc(100% - 85px)">
+            <div class="offcanvas-body py-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="pc-dark">
+                            <h6 class="mb-1">Theme Mode</h6>
+                            <p class="text-muted text-sm">Choose light or dark mode or Auto</p>
+                            <div class="row theme-layout">
+                                <div class="col-4">
+                                    <div class="d-grid">
+                                        <button class="preset-btn btn active" data-value="true" onclick="layout_change('light');">
+                                            <svg class="pc-icon text-warning">
+                                                <use xlink:href="#custom-sun-1"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-grid">
+                                        <button class="preset-btn btn" data-value="false" onclick="layout_change('dark');">
+                                            <svg class="pc-icon">
+                                                <use xlink:href="#custom-moon"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-grid">
+                                        <button class="preset-btn btn" data-value="default" onclick="layout_change_default();">
+                                            <svg class="pc-icon">
+                                                <use xlink:href="#custom-setting-2"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <h6 class="mb-1">Theme Contrast</h6>
+                        <p class="text-muted text-sm">Choose theme contrast</p>
+                        <div class="row theme-contrast">
+                            <div class="col-6">
+                                <div class="d-grid">
+                                    <button class="preset-btn btn" data-value="true" onclick="layout_sidebar_change('true');">
+                                        <svg class="pc-icon">
+                                            <use xlink:href="#custom-mask"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-grid">
+                                    <button class="preset-btn btn active" data-value="false" onclick="layout_sidebar_change('false');">
+                                        <svg class="pc-icon">
+                                            <use xlink:href="#custom-mask-1-outline"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <h6 class="mb-1">Custom Theme</h6>
+                        <p class="text-muted text-sm">Choose your Primary color</p>
+                        <div class="theme-color preset-color">
+                            <a href="#!" class="active" data-value="preset-1"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-2"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-3"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-4"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-5"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-6"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-7"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-8"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-9"><i class="ti ti-check"></i></a>
+                            <a href="#!" data-value="preset-10"><i class="ti ti-check"></i></a>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <h6 class="mb-1">Sidebar Caption</h6>
+                        <p class="text-muted text-sm">Sidebar Caption Hide/Show</p>
+                        <div class="row theme-nav-caption">
+                            <div class="col-6">
+                                <div class="d-grid">
+                                    <button class="preset-btn btn active" data-value="true" onclick="layout_caption_change('true');">
+                                        <img src="assets/images/customizer/img-caption-1.svg" alt="img" class="img-fluid" width="70%" />
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-grid">
+                                    <button class="preset-btn btn" data-value="false" onclick="layout_caption_change('false');">
+                                        <img src="assets/images/customizer/img-caption-2.svg" alt="img" class="img-fluid" width="70%" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="pc-rtl">
+                            <h6 class="mb-1">Theme Layout</h6>
+                            <p class="text-muted text-sm">LTR/RTL</p>
+                            <div class="row theme-direction">
+                                <div class="col-6">
+                                    <div class="d-grid">
+                                        <button class="preset-btn btn active" data-value="false" onclick="layout_rtl_change('false');">
+                                            <img src="assets/images/customizer/img-layout-1.svg" alt="img" class="img-fluid" width="70%" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-grid">
+                                        <button class="preset-btn btn" data-value="true" onclick="layout_rtl_change('true');">
+                                            <img src="assets/images/customizer/img-layout-2.svg" alt="img" class="img-fluid" width="70%" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="pc-container-width">
+                            <h6 class="mb-1">Layout Width</h6>
+                            <p class="text-muted text-sm">Choose Full or Container Layout</p>
+                            <div class="row theme-container">
+                                <div class="col-6">
+                                    <div class="d-grid">
+                                        <button class="preset-btn btn active" data-value="false" onclick="change_box_container('false')">
+                                            <img src="assets/images/customizer/img-container-1.svg" alt="img" class="img-fluid" width="70%" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-grid">
+                                        <button class="preset-btn btn" data-value="true" onclick="change_box_container('true')">
+                                            <img src="assets/images/customizer/img-container-2.svg" alt="img" class="img-fluid" width="70%" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="d-grid">
+                            <button class="btn btn-light-danger" id="layoutreset">Reset Layout</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

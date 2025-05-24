@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Blaze</title>
+    
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <!-- [Font] Family -->
+    <link rel="stylesheet" href="assets/fonts/inter/inter.css" id="main-font-link" />
+
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="assets/fonts/tabler-icons.min.css" />
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="assets/fonts/feather.css" />
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="assets/fonts/fontawesome.css" />
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="assets/fonts/material.css" />
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="assets/css/style.css" id="main-style-link" />
+    <link rel="stylesheet" href="assets/css/style-preset.css" />
+    
+    <style>
+        .admin-header {
+            background: var(--pc-primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .admin-table th, 
+        .admin-table td {
+            border: 1px solid #e1e4e8;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        
+        .admin-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .admin-table tr:hover {
+            background-color: #f6f8fa;
+        }
+        
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .admin-actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .stats-card {
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-card h2 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .stats-card p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .bg-primary {
+            background: var(--pc-primary);
+        }
+
+        .bg-success {
+            background: var(--pc-success);
+        }
+
+        .bg-warning {
+            background: var(--pc-warning);
+        }
+
+        .bg-danger {
+            background: var(--pc-danger);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+        
+        .pc-container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="pc-sidebar-fixed pc-header-fixed" data-pc-preset="preset-5">
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+
+    <!-- [ Mobile Header ] start -->
+    <!-- Mobile header removed as requested -->
+    <!-- [ Mobile Header ] End -->
+
+    <!-- [ navigation menu ] start -->
+    <nav class="pc-sidebar">
+        <div class="navbar-wrapper">
+            <div class="m-header">
+                <a href="/" class="b-brand">
+                    <img src="assets/images/logo.svg" alt="" class="logo logo-lg">
+                </a>
+            </div>
+            <div class="navbar-content">
+                <ul class="pc-navbar">
+                    <li class="pc-item pc-caption">
+                        <label>Admin</label>
+                    </li>
+                    <li class="pc-item">
+                        <a href="#" class="pc-link tab-link" data-tab="dashboard"><span class="pc-micon"><i class="ti ti-dashboard"></i></span><span class="pc-mtext">Dashboard</span></a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="#" class="pc-link tab-link" data-tab="users"><span class="pc-micon"><i class="ti ti-users"></i></span><span class="pc-mtext">Users</span></a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="#" class="pc-link tab-link" data-tab="create-admin"><span class="pc-micon"><i class="ti ti-user-plus"></i></span><span class="pc-mtext">Create Admin</span></a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="#" class="pc-link tab-link" data-tab="edit-admin"><span class="pc-micon"><i class="ti ti-edit"></i></span><span class="pc-mtext">Edit Admin</span></a>
+                    </li>
+                    <li class="pc-item">
+                        <a href="#" class="pc-link" id="logout-btn"><span class="pc-micon"><i class="ti ti-power"></i></span><span class="pc-mtext">Logout</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- [ navigation menu ] end -->
+
+    <!-- [ Header ] start -->
+    <!-- Header removed as requested -->
+    <!-- [ Header ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+        <div class="pcoded-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Admin Panel</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" class="tab-link" data-tab="dashboard">Admin</a></li>
+                                <li class="breadcrumb-item" id="current-tab">Dashboard</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div class="row tab-content" id="dashboard-tab">                <div class="col-sm-12">                    <div class="card">                        <div class="card-header">                            <h5>Dashboard</h5>                        </div>                        <div class="card-body">                            <div class="row">                                <div class="col-md-3">                                    <div class="stats-card bg-primary">                                        <h2 id="total-users">0</h2>                                        <p>Total Users</p>                                    </div>                                </div>                                <div class="col-md-3">                                    <div class="stats-card bg-success">                                        <h2 id="active-users">0</h2>                                        <p>Active Users</p>                                    </div>                                </div>                                <div class="col-md-3">                                    <div class="stats-card bg-warning">                                        <h2 id="pending-users">0</h2>                                        <p>Pending Verification</p>                                    </div>                                </div>                                <div class="col-md-3">                                    <div class="stats-card bg-danger">                                        <h2 id="admin-users">0</h2>                                        <p>Admin Users</p>                                    </div>                                </div>                            </div>                        </div>                    </div>                </div>            </div>
+
+            <!-- Users Tab -->
+            <div class="row tab-content" id="users-tab">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>User Management</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover admin-table" id="usersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Profile Picture</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- User data will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="admin-actions">
+                                <button class="btn btn-primary" onclick="exportUsers()">Export Users Data</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Admin Tab -->
+            <div class="row tab-content" id="create-admin-tab">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Create New Admin</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="createAdminForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" id="fullName" name="fullName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Create Admin</button>
+                                    </div>
+                                </div>
+                                <div class="mt-3" id="createAdminMessage" style="display: none;"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Edit Admin Tab -->
+            <div class="row tab-content" id="edit-admin-tab">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Edit Admin Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="editAdminForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" id="editFullName" name="editFullName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="editUsername" name="editUsername" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="editEmail" name="editEmail" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Update Details</button>
+                                    </div>
+                                </div>
+                                <div class="mt-3" id="editAdminMessage" style="display: none;"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-sm-12 mt-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Change Password</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="changePasswordForm">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">New Password</label>
+                                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Confirm New Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-warning">Change Password</button>
+                                    </div>
+                                </div>
+                                <div class="mt-3" id="changePasswordMessage" style="display: none;"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <!-- User Details Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="mb-0">Profile Details</h5>
+                    <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default" data-bs-dismiss="modal">
+                        <i class="ti ti-x f-20"></i>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4" id="modal-loading">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading user details...</p>
+                    </div>
+                    <div id="user-details-content" style="display: none;">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-body position-relative">
+                                        <div class="text-center mt-3">
+                                            <div class="chat-avtar d-inline-flex mx-auto">
+                                                <img id="modal-user-avatar" class="rounded-circle img-fluid wid-60" src="/assets/images/user/blank-avatar.png" alt="User Avatar" onerror="this.onerror=null; this.src='/assets/images/user/blank-avatar.png';">
+                                            </div>
+                                            <h5 class="mb-0" id="modal-user-name">User Name</h5>
+                                            <p class="text-muted text-sm" id="modal-year-of-study">Year of Study</p>
+                                            <hr class="my-3 border border-secondary-subtle">
+                                            <div class="d-inline-flex align-items-center justify-content-between w-100 mb-3">
+                                                <i class="ti ti-map-pin me-2"></i>
+                                                <p class="mb-0" id="modal-location">Location</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header d-inline-flex align-items-center justify-content-space-between">
+                                        <h5 style="margin-left:15px;">No of Co-Founders: <span id="modal-cofounders">0</span></h5>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Skills</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center mb-3">
+                                            <p class="mb-1 text-muted">Hard Skills</p>
+                                            <div class="col-sm-12 mb-2 mb-sm-0">
+                                                <p class="mb-0" id="modal-hard-skills">-</p>
+                                            </div>
+                                        </div>
+                                        <div class="row align-items-center mb-3">
+                                            <p class="mb-1 text-muted">Soft Skills</p>
+                                            <div class="col-sm-12 mb-2 mb-sm-0">
+                                                <p class="mb-0" id="modal-soft-skills">-</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>About me</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0" id="modal-bio">-</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Personal Details</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item px-0 pt-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Full Name</p>
+                                                        <p class="mb-0" id="modal-full-name">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Username</p>
+                                                        <p class="mb-0" id="modal-username">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item px-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Date of Birth</p>
+                                                        <p class="mb-0" id="modal-dob">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Gender</p>
+                                                        <p class="mb-0" id="modal-gender">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item px-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">State</p>
+                                                        <p class="mb-0" id="modal-state">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">City</p>
+                                                        <p class="mb-0" id="modal-city">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item px-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Zip Code</p>
+                                                        <p class="mb-0" id="modal-zip">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Email</p>
+                                                        <p class="mb-0" id="modal-email">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item px-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Pronouns</p>
+                                                        <p class="mb-0" id="modal-pronouns">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Status</p>
+                                                        <p class="mb-0" id="modal-status">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Education</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item px-0 pt-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Year of Study</p>
+                                                        <p class="mb-0" id="modal-year">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Institute</p>
+                                                        <p class="mb-0" id="modal-institution">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item px-0 pb-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Major</p>
+                                                        <p class="mb-0" id="modal-major">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Major Type</p>
+                                                        <p class="mb-0" id="modal-major-type">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item px-0 pb-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Major Sub Category</p>
+                                                        <p class="mb-0" id="modal-major-sub">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Interest/industry</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item px-0 pt-0">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">My Interests</p>
+                                                        <p class="mb-0" id="modal-interests">-</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="mb-1 text-muted">Looking for specific interest</p>
+                                                        <p class="mb-0" id="modal-looking-for">-</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="modal-user-actions">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Required Js -->
+    <script src="assets/js/plugins/popper.min.js"></script>
+    <script src="assets/js/plugins/simplebar.min.js"></script>
+    <script src="assets/js/plugins/bootstrap.min.js"></script>
+    <script src="assets/js/fonts/custom-font.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/pcoded.js"></script>
+    <script src="assets/js/plugins/feather.min.js"></script>
+
+    <script>
+        // Check if user is authenticated as admin
+        function checkAdminAuth() {
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            const userType = localStorage.getItem('userType');
+            
+            console.log('Checking admin authentication...');
+            console.log('Token:', token ? 'Present' : 'Missing');
+            console.log('Session ID:', sessionId ? 'Present' : 'Missing');
+            console.log('User Type:', userType);
+            
+            if (!token || !sessionId) {
+                console.error('Authentication failed: Missing token or session ID');
+                window.location.href = '/admin-login';
+                return false;
+            }
+            
+            // Add cookies for any API requests
+            document.cookie = `token=${token}; path=/; max-age=86400`;
+            document.cookie = `sessionId=${sessionId}; path=/; max-age=86400`;
+            
+            return true;
+        }
+
+        // Function to handle errors in fetch
+        function handleFetchError(response) {
+            console.log('API Response Status:', response.status);
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.statusText);
+            }
+            return response;
+        }
+
+        /**
+         * Utility function to load profile pictures with fallback options
+         * @param {string} userId - The user ID
+         * @param {string} profilePicture - The profile picture path from user object
+         * @returns {string} - The corrected profile picture URL
+         */
+        function getProfilePicturePath(userId, profilePicture) {
+            // Default avatar path
+            const defaultAvatar = '/assets/images/user/blank-avatar.png';
+            
+            // If no profile picture specified, return default
+            if (!profilePicture || profilePicture === 'assets/images/user/blank-avatar.png') {
+                return defaultAvatar;
+            }
+            
+            // Handle different path formats
+            if (profilePicture.startsWith('profile_pics/')) {
+                return `/uploads/${profilePicture}`;
+            } else if (profilePicture.includes('uploads/profile_pics/')) {
+                return `/${profilePicture}`;
+            } else if (profilePicture.startsWith('/')) {
+                return profilePicture;
+            } else {
+                // Just the filename, construct the path with user ID
+                return `/uploads/profile_pics/${userId}/${profilePicture}`;
+            }
+        }
+
+        // Initialize feather icons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize feather icons
+            feather.replace();
+            
+            // Set active tab (default to dashboard)
+            setActiveTab('dashboard');
+            
+            // Add tab click event listeners
+            document.querySelectorAll('.tab-link').forEach(tabLink => {
+                tabLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabId = this.getAttribute('data-tab');
+                    setActiveTab(tabId);
+                });
+            });
+
+            // Add logout event listener
+            document.getElementById('logout-btn').addEventListener('click', logoutAdmin);
+            
+            // Add form submission handler for create admin
+            document.getElementById('createAdminForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                createAdmin();
+            });
+            
+            // Add form submission handler for edit admin
+            document.getElementById('editAdminForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                updateAdminDetails();
+            });
+            
+            // Add form submission handler for change password
+            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                changeAdminPassword();
+            });
+            
+            // Load current admin data if on edit admin tab
+            if (window.location.hash === '#edit-admin') {
+                loadAdminDetails();
+            }
+        });
+
+        // Function to change tabs
+        function setActiveTab(tabId) {
+            // Update active class for links
+            document.querySelectorAll('.tab-link').forEach(link => {
+                if (link.getAttribute('data-tab') === tabId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Hide all tab contents and show the selected one
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+
+            // Update breadcrumb
+            document.getElementById('current-tab').textContent = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+
+            // Load tab-specific data if needed
+            if (tabId === 'dashboard') {
+                loadDashboardStats();
+            } else if (tabId === 'users') {
+                loadUsers();
+            } else if (tabId === 'edit-admin') {
+                loadAdminDetails();
+            }
+        }
+
+        // Function to log out admin
+        function logoutAdmin(e) {
+            e.preventDefault();
+            
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            fetch('/api/auth/admin-logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Logout successful:', data);
+                
+                // Clear localStorage
+                localStorage.removeItem('token');
+                localStorage.removeItem('sessionId');
+                localStorage.removeItem('userType');
+                
+                // Clear cookies
+                document.cookie = 'token=; Max-Age=-99999999; path=/';
+                document.cookie = 'sessionId=; Max-Age=-99999999; path=/';
+                
+                // Redirect to login page
+                window.location.href = '/admin-login';
+            })
+            .catch(error => {
+                console.error('Logout error:', error);
+                // Even if there's an error, clear local data and redirect
+                localStorage.clear();
+                document.cookie = 'token=; Max-Age=-99999999; path=/';
+                document.cookie = 'sessionId=; Max-Age=-99999999; path=/';
+                window.location.href = '/admin-login';
+            });
+        }
+
+        // Function to load dashboard statistics
+        function loadDashboardStats() {
+            if (!checkAdminAuth()) return;
+
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            // Get user data for stats
+            fetch('/admin/users', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId
+                }
+            })
+            .then(handleFetchError)
+            .then(response => response.json())
+            .then(users => {
+                // Calculate stats
+                const totalUsers = users.length;
+                const activeUsers = users.filter(user => user.verification_status === 'active').length;
+                const pendingUsers = users.filter(user => user.verification_status === 'inactive').length;
+                const adminUsers = users.filter(user => user.user_type === 'admin').length;
+                
+                // Update the stats cards
+                document.getElementById('total-users').textContent = totalUsers;
+                document.getElementById('active-users').textContent = activeUsers;
+                document.getElementById('pending-users').textContent = pendingUsers;
+                document.getElementById('admin-users').textContent = adminUsers;
+            })
+            .catch(error => {
+                console.error('Error fetching dashboard data:', error);
+            });
+        }
+
+        // Function to load users
+        function loadUsers() {
+            if (!checkAdminAuth()) return;
+
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            // Fetch users and populate the table
+            fetch('/admin/users', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId
+                }
+            })
+            .then(handleFetchError)
+            .then(response => response.json())
+            .then(users => {
+                const tbody = document.querySelector('#usersTable tbody');
+                
+                // Clear existing rows
+                tbody.innerHTML = '';
+                
+                // Sort users to get the first admin (oldest)
+                const sortedAdmins = users
+                    .filter(user => user.user_type === 'admin')
+                    .sort((a, b) => new Date(a.user_since) - new Date(b.user_since));
+                
+                const firstAdminId = sortedAdmins.length > 0 ? sortedAdmins[0]._id : null;
+                
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    
+                    // Get correct profile picture path
+                    const profilePicPath = getProfilePicturePath(user._id, user.profile_picture);
+                    
+                    // Build actions column based on user type
+                    let actionsHtml = '';
+                    
+                    if (user.user_type === 'admin') {
+                        // Only add delete button for admins that are not the first admin
+                        if (user._id !== firstAdminId) {
+                            actionsHtml = `<button class="btn btn-sm btn-danger" onclick="deleteUser('${user._id}')">Delete</button>`;
+                        } else {
+                            actionsHtml = '<span class="badge bg-primary">Primary Admin</span>';
+                        }
+                    } else {
+                        // Regular users get view and delete
+                        actionsHtml = `
+                            <button class="btn btn-sm btn-primary" onclick="viewUser('${user._id}')">View</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser('${user._id}')">Delete</button>
+                        `;
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${user._id}</td>
+                        <td>${user.full_name}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td><img src="${profilePicPath}" alt="Profile" class="profile-pic" onerror="this.src='/assets/images/user/blank-avatar.png'"></td>
+                        <td>${user.verification_status} ${user.user_type === 'admin' ? '<span class="badge bg-primary">Admin</span>' : ''}</td>
+                        <td>${actionsHtml}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching users:', error);
+                document.querySelector('#usersTable tbody').innerHTML = 
+                    `<tr><td colspan="7">Error loading users. Please make sure you're logged in as an admin.</td></tr>`;
+            });
+        }
+
+        // Function to create a new admin user
+        function createAdmin() {
+            if (!checkAdminAuth()) return;
+
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            const fullName = document.getElementById('fullName').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            const messageDiv = document.getElementById('createAdminMessage');
+            
+            // Validation
+            if (!fullName || !username || !email || !password) {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'All fields are required';
+                return;
+            }
+            
+            // Send request to create admin
+            fetch('/admin/create-admin', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    full_name: fullName,
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-success';
+                    messageDiv.textContent = 'Admin user created successfully';
+                    
+                    // Clear form
+                    document.getElementById('createAdminForm').reset();
+                    
+                    // Refresh dashboard stats
+                    setTimeout(() => {
+                        loadDashboardStats();
+                    }, 1000);
+                } else {
+                    // Show error message
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.textContent = data.message || 'Failed to create admin user';
+                }
+            })
+            .catch(error => {
+                console.error('Error creating admin:', error);
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'An error occurred. Please try again.';
+            });
+        }
+
+        // Function to view user details
+        function viewUser(userId) {
+            if (!checkAdminAuth()) return;
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            // Show modal with loading state
+            const userModal = new bootstrap.Modal(document.getElementById('userModal'));
+            userModal.show();
+            
+            // Show loading, hide content
+            document.getElementById('modal-loading').style.display = 'block';
+            document.getElementById('user-details-content').style.display = 'none';
+            
+            // Fetch user details
+            fetch(`/admin/users/${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId
+                }
+            })
+            .then(handleFetchError)
+            .then(response => response.json())
+            .then(user => {
+                // Hide loading, show content
+                document.getElementById('modal-loading').style.display = 'none';
+                document.getElementById('user-details-content').style.display = 'block';
+                
+                // Get correct profile picture path
+                const profilePicPath = getProfilePicturePath(user._id, user.profile_picture);
+                
+                // Handle complex/nested properties
+                const getNestedValue = (obj, property) => {
+                    if (!obj) return '-';
+                    
+                    // Direct property check
+                    if (typeof obj[property] !== 'undefined') {
+                        // Handle object with value/custom properties
+                        if (typeof obj[property] === 'object' && obj[property] !== null) {
+                            // If it has a value property, use it
+                            if (obj[property].value) {
+                                return obj[property].value;
+                            }
+                            // If it has a custom property and value is null/empty, use custom
+                            else if (obj[property].custom) {
+                                return obj[property].custom;
+                            }
+                            // For arrays, join with commas
+                            else if (Array.isArray(obj[property])) {
+                                return obj[property].join(', ');
+                            }
+                        }
+                        return obj[property] || '-';
+                    }
+                    
+                    return '-';
+                };
+                
+                // Basic profile info
+                document.getElementById('modal-user-avatar').src = profilePicPath;
+                document.getElementById('modal-user-name').textContent = user.full_name || 'Unknown';
+                
+                // Year of Study - handle object format
+                const yearOfStudyText = getNestedValue(user, 'year_of_study');
+                document.getElementById('modal-year-of-study').textContent = yearOfStudyText;
+                
+                // Location - combine city and state if available
+                const city = getNestedValue(user, 'city');
+                const state = getNestedValue(user, 'state');
+                let locationText = 'Location not specified';
+                
+                if (city !== '-' && state !== '-') {
+                    locationText = `${city}, ${state}`;
+                } else if (city !== '-') {
+                    locationText = city;
+                } else if (state !== '-') {
+                    locationText = state;
+                }
+                document.getElementById('modal-location').textContent = locationText;
+                
+                // Set co-founders count
+                document.getElementById('modal-cofounders').textContent = user.co_founders_count || '0';
+                
+                // Set skills
+                document.getElementById('modal-hard-skills').textContent = 
+                    Array.isArray(user.technical_skills) && user.technical_skills.length > 0 
+                        ? user.technical_skills.join(', ') 
+                        : '-';
+                
+                document.getElementById('modal-soft-skills').textContent = 
+                    Array.isArray(user.soft_skills) && user.soft_skills.length > 0 
+                        ? user.soft_skills.join(', ') 
+                        : '-';
+                
+                // Bio
+                document.getElementById('modal-bio').textContent = user.bio || '-';
+                
+                // Personal details
+                document.getElementById('modal-full-name').textContent = user.full_name || '-';
+                document.getElementById('modal-username').textContent = user.username || '-';
+                document.getElementById('modal-email').textContent = user.email || '-';
+                
+                // Format date of birth if it exists
+                if (user.date_of_birth) {
+                    const dob = new Date(user.date_of_birth);
+                    document.getElementById('modal-dob').textContent = 
+                        dob.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                } else {
+                    document.getElementById('modal-dob').textContent = '-';
+                }
+                
+                // Get gender with proper handling of nested object
+                let gender = '-';
+                if (user.gender) {
+                    if (user.gender.value === 'Other' && user.gender.custom) {
+                        gender = user.gender.custom;
+                    } else if (user.gender.value) {
+                        gender = user.gender.value;
+                    }
+                }
+                document.getElementById('modal-gender').textContent = gender;
+                
+                // Address information
+                document.getElementById('modal-state').textContent = getNestedValue(user, 'state');
+                document.getElementById('modal-city').textContent = getNestedValue(user, 'city');
+                document.getElementById('modal-zip').textContent = getNestedValue(user, 'zip');
+                
+                // Get pronouns with proper handling of nested object
+                let pronouns = '-';
+                if (user.pronoun) {
+                    if (user.pronoun.value === 'Other' && user.pronoun.custom) {
+                        pronouns = user.pronoun.custom;
+                    } else if (user.pronoun.value) {
+                        pronouns = user.pronoun.value;
+                    }
+                }
+                document.getElementById('modal-pronouns').textContent = pronouns;
+                
+                // Verification status
+                document.getElementById('modal-status').textContent = user.verification_status || '-';
+                
+                // Education
+                document.getElementById('modal-year').textContent = getNestedValue(user, 'year_of_study');
+                document.getElementById('modal-institution').textContent = getNestedValue(user, 'institution');
+                document.getElementById('modal-major').textContent = getNestedValue(user, 'major_category');
+                document.getElementById('modal-major-type').textContent = user.major_type || '-';
+                document.getElementById('modal-major-sub').textContent = getNestedValue(user, 'major_sub_category');
+                
+                // Interests
+                document.getElementById('modal-interests').textContent = 
+                    Array.isArray(user.my_interests) && user.my_interests.length > 0 
+                        ? user.my_interests.join(', ') 
+                        : '-';
+                
+                document.getElementById('modal-looking-for').textContent = 
+                    Array.isArray(user.interests_looking_in_others) && user.interests_looking_in_others.length > 0 
+                        ? user.interests_looking_in_others.join(', ') 
+                        : '-';
+            })
+            .catch(error => {
+                console.error('Error fetching user details:', error);
+                // Show error message in modal
+                document.getElementById('modal-loading').style.display = 'none';
+                document.getElementById('user-details-content').innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5>Error loading user details</h5>
+                        <p>${error.message || 'An unknown error occurred'}</p>
+                    </div>
+                `;
+                document.getElementById('user-details-content').style.display = 'block';
+            });
+        }
+
+        // Function to delete a user
+        function deleteUser(userId) {
+            if (!checkAdminAuth()) return;
+
+            // Confirm before deleting
+            if (confirm(`Are you sure you want to delete this user? This action cannot be undone.`)) {
+                const token = localStorage.getItem('token');
+                const sessionId = localStorage.getItem('sessionId');
+                
+                // Send request to delete user
+                fetch(`/admin/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'X-Session-ID': sessionId
+                    }
+                })
+                .then(handleFetchError)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('User deleted successfully');
+                        // Refresh the users list
+                        loadUsers();
+                        // Refresh dashboard stats
+                        loadDashboardStats();
+                    } else {
+                        alert(data.message || 'Failed to delete user');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting user:', error);
+                    alert('An error occurred while deleting the user. Please try again.');
+                });
+            }
+        }
+
+        // Export users function
+        function exportUsers() {
+            if (!checkAdminAuth()) return;
+
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            // Show a loading indicator
+            const usersTable = document.querySelector('#usersTable');
+            const loadingMsg = document.createElement('div');
+            loadingMsg.id = 'export-loading';
+            loadingMsg.className = 'alert alert-info text-center mt-3';
+            loadingMsg.innerHTML = `
+                <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                Preparing CSV export... Please wait.
+            `;
+            usersTable.parentNode.insertBefore(loadingMsg, usersTable.nextSibling);
+            
+            // Create the download URL with the authentication tokens
+            const exportUrl = `/admin/export-users?token=${encodeURIComponent(token)}&sessionId=${encodeURIComponent(sessionId)}`;
+            
+            // Use fetch to download the file directly
+            fetch(exportUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId
+                }
+            })
+            .then(response => {
+                // Remove loading indicator
+                document.getElementById('export-loading').remove();
+                
+                if (!response.ok) {
+                    throw new Error(`Export failed with status: ${response.status}`);
+                }
+                
+                // Get filename from Content-Disposition header or use default
+                let filename = 'blaze-users-export.csv';
+                const disposition = response.headers.get('Content-Disposition');
+                if (disposition && disposition.includes('filename=')) {
+                    filename = disposition.split('filename=')[1].replace(/["']/g, '');
+                }
+                
+                // Get the CSV data as a blob
+                return response.blob().then(blob => {
+                    // Create a download link
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = filename;
+                    
+                    // Append to body, click programmatically, and clean up
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                });
+            })
+            .catch(error => {
+                // Remove loading indicator if still present
+                const loadingElement = document.getElementById('export-loading');
+                if (loadingElement) loadingElement.remove();
+                
+                // Show error message
+                console.error('Error exporting users:', error);
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'alert alert-danger text-center mt-3';
+                errorMsg.textContent = `Export failed: ${error.message}. Please try again.`;
+                usersTable.parentNode.insertBefore(errorMsg, usersTable.nextSibling);
+                
+                // Automatically remove the error message after 5 seconds
+                setTimeout(() => {
+                    errorMsg.remove();
+                }, 5000);
+            });
+        }
+
+        // Function to load admin details for editing
+        function loadAdminDetails() {
+            if (!checkAdminAuth()) return;
+            
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            console.log('Loading admin details...');
+            
+            // Show loading state
+            const messageDiv = document.getElementById('editAdminMessage');
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'alert alert-info';
+            messageDiv.textContent = 'Loading admin details...';
+            
+            fetch('/api/auth/me', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId
+                }
+            })
+            .then(handleFetchError)
+            .then(response => response.json())
+            .then(admin => {
+                console.log('Admin details loaded:', admin);
+                
+                // Hide message
+                messageDiv.style.display = 'none';
+                
+                // Populate form fields
+                document.getElementById('editFullName').value = admin.full_name || '';
+                document.getElementById('editUsername').value = admin.username || '';
+                document.getElementById('editEmail').value = admin.email || '';
+            })
+            .catch(error => {
+                console.error('Error loading admin details:', error);
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'Error loading admin details. Please try again.';
+            });
+        }
+        
+        // Function to update admin details
+        function updateAdminDetails() {
+            if (!checkAdminAuth()) return;
+            
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            const fullName = document.getElementById('editFullName').value;
+            const username = document.getElementById('editUsername').value;
+            const email = document.getElementById('editEmail').value;
+            
+            const messageDiv = document.getElementById('editAdminMessage');
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'alert alert-info';
+            messageDiv.textContent = 'Updating details...';
+            
+            // Validation
+            if (!fullName || !username || !email) {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'All fields are required';
+                return;
+            }
+            
+            console.log('Sending update request with data:', {
+                full_name: fullName,
+                username: username,
+                email: email
+            });
+            
+            // Send request to update admin
+            fetch('/admin/update-admin', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    full_name: fullName,
+                    username: username,
+                    email: email
+                })
+            })
+            .then(response => {
+                console.log('Update response status:', response.status);
+                if (!response.ok) {
+                    console.error('Update response not OK:', response.statusText);
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Update response data:', data);
+                if (data.success) {
+                    // Show success message
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-success';
+                    messageDiv.textContent = 'Admin details updated successfully';
+                    
+                    // Refresh dashboard stats after 1 second
+                    setTimeout(() => {
+                        loadDashboardStats();
+                    }, 1000);
+                } else {
+                    // Show error message
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.textContent = data.message || 'Failed to update admin details';
+                }
+            })
+            .catch(error => {
+                console.error('Error updating admin details:', error);
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'An error occurred. Please try again.';
+            });
+        }
+        
+        // Function to change admin password
+        function changeAdminPassword() {
+            if (!checkAdminAuth()) return;
+            
+            const token = localStorage.getItem('token');
+            const sessionId = localStorage.getItem('sessionId');
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            const messageDiv = document.getElementById('changePasswordMessage');
+            messageDiv.style.display = 'block';
+            messageDiv.className = 'alert alert-info';
+            messageDiv.textContent = 'Changing password...';
+            
+            // Validation
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'All fields are required';
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'New passwords do not match';
+                return;
+            }
+            
+            console.log('Sending password change request');
+            
+            // Send request to change password
+            fetch('/admin/change-password', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-Session-ID': sessionId,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    current_password: currentPassword,
+                    new_password: newPassword,
+                    confirm_password: confirmPassword
+                })
+            })
+            .then(response => {
+                console.log('Password change response status:', response.status);
+                if (!response.ok) {
+                    console.error('Password change response not OK:', response.statusText);
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Password change response data:', data);
+                if (data.success) {
+                    // Show success message
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-success';
+                    messageDiv.textContent = 'Password changed successfully';
+                    
+                    // Clear form
+                    document.getElementById('changePasswordForm').reset();
+                } else {
+                    // Show error message
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.textContent = data.message || 'Failed to change password';
+                }
+            })
+            .catch(error => {
+                console.error('Error changing password:', error);
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-danger';
+                messageDiv.textContent = 'An error occurred. Please try again.';
+            });
+        }
+
+        // Initial load if user is authenticated
+        if (checkAdminAuth()) {
+            loadDashboardStats();
+        }
+    </script>
+</body>
+</html> 

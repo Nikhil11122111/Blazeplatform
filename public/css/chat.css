@@ -1,0 +1,262 @@
+/* Chat container styles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Message container */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Message styles */
+.message-in,
+.message-out {
+  margin-bottom: 1.5rem;
+  max-width: 75%;
+}
+
+/* Incoming messages (from other user) */
+.message-in {
+  margin-right: auto;
+}
+
+/* Outgoing messages (from current user) */
+.message-out {
+  margin-left: auto;
+}
+
+/* Message content */
+.msg-content {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* Gray background for incoming messages */
+.message-in .msg-content {
+  background-color: #f0f2f5;
+  color: #1e1e1e;
+}
+
+/* Red background for outgoing messages */
+.message-out .msg-content {
+  background-color: #dc2626;
+  color: white;
+}
+
+.msg-content p {
+  margin-bottom: 0;
+}
+
+/* Modal styles for file and image previews */
+.file-preview-modal,
+.image-preview-modal {
+  display: none;
+  position: fixed;
+  z-index: 10000000 !important; /* Extremely high z-index to guarantee it appears on top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  animation: fadeIn 0.3s;
+}
+
+.file-preview-modal .modal-content,
+.image-preview-modal .modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 10000001 !important; /* Even higher than the modal overlay */
+}
+
+/* Force text in modal to be dark for readability */
+.file-preview-modal .modal-content h3,
+.image-preview-modal .modal-content h3 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+/* Style for close button */
+.file-preview-modal button,
+.image-preview-modal button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s;
+}
+
+.file-preview-modal button:hover,
+.image-preview-modal button:hover {
+  color: #dc2626;
+}
+
+/* Animation for modal display */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Style for download button in modals */
+.file-preview-modal .btn-primary,
+.image-preview-modal .btn-primary {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.file-preview-modal .btn-primary:hover,
+.image-preview-modal .btn-primary:hover {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+}
+
+/* Force white text in outgoing messages */
+.force-message-out .msg-content {
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+/* Force link colors in outgoing messages */
+.force-message-out .msg-content a {
+  color: white !important;
+  text-decoration: underline;
+}
+
+/* Avatar styles */
+.chat-avtar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.chat-avtar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Message metadata */
+.text-sm {
+  font-size: 0.75rem;
+}
+
+.text-muted {
+  color: #65676b !important;
+}
+
+/* Flex utilities */
+.d-flex {
+  display: flex;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.mx-3 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+/* Message specific margins */
+.message-in .d-flex,
+.message-out .d-flex {
+  align-items: flex-end;
+}
+
+/* Avatar spacing */
+.message-in .chat-avtar {
+  margin-right: 0.5rem;
+}
+
+.message-out .chat-avtar {
+  margin-left: 0.5rem;
+}
+
+/* Fluid image in avatar */
+.wid-40 {
+  width: 40px;
+  height: 40px;
+}
+
+/* Background color utility */
+.bg-primary {
+  background-color: #dc2626 !important;
+  color: white;
+}
+
+/* Message status indicators */
+.message-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 0.15rem;
+}
+
+.message-status i {
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+  color: #dc2626;
+}
+
+/* Typing indicator */
+.typing-indicator {
+  padding: 0.5rem;
+  background: #f0f2f5;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* File attachments */
+.file-attachment {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.file-attachment i {
+  margin-right: 0.5rem;
+}
+
+/* Image messages */
+.msg-content img {
+  max-width: 200px;
+  border-radius: 0.5rem;
+  margin: 0.25rem 0;
+} 
