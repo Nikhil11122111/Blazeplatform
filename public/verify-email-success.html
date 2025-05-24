@@ -89,7 +89,7 @@
         
         if (token) {
             // Verify the email with the token
-            fetch(`http://localhost:5001/api/auth/verify-email/${token}`)
+            fetch(`https://blazeplatform.onrender.com/api/auth/verify-email/${token}`)
                 .then(response => {
                     if (!response.ok) {
                         return response.json().then(data => {

@@ -9,7 +9,7 @@ async function checkAuth() {
     // If we're on an auth page and have valid credentials, redirect to dashboard
     if (isAuthPage(currentPage) && token && sessionId) {
         try {
-        const response = await fetch('http://localhost:5001/api/auth/me', {
+        const response = await fetch('https://blazeplatform.onrender.com/api/auth/me', {
             method: 'GET',
             headers: {
                     'Authorization': `Bearer ${token}`,
@@ -74,7 +74,7 @@ async function logout() {
         const sessionId = localStorage.getItem('sessionId');
         
         if (token && sessionId) {
-        await fetch('http://localhost:5001/api/auth/logout', {
+        await fetch('https://blazeplatform.onrender.com/api/auth/logout', {
             method: 'POST',
             headers: {
                     'Authorization': `Bearer ${token}`,
