@@ -4,7 +4,7 @@
 // Option 2: For testing, temporarily allow localhost (not recommended for production)
 
 // IMPORTANT: Replace 'your-backend-name' with your actual backend URL once deployed
-const API_BASE_URL = 'https://your-backend-name.onrender.com'; // TODO: Replace with your deployed backend URL
+const API_BASE_URL = 'https://blazeplatform.onrender.com'; // TODO: Replace with your deployed backend URL
 
 // Temporary fallback for development (uncomment the line below if testing locally)
 // const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5001' : 'https://your-backend-name.onrender.com';
