@@ -1,11 +1,14 @@
 // API Configuration
-// Update this URL when your backend is deployed
-const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:5001' 
-    : 'https://your-backend-name.onrender.com'; // TODO: Replace with your deployed backend URL
+// Since your backend is not deployed yet, you have two options:
+// Option 1: Deploy your backend first, then update the URL below
+// Option 2: For testing, temporarily allow localhost (not recommended for production)
 
-// For now, since backend is not deployed, use a placeholder
-// This will need to be updated once you deploy your backend
+// IMPORTANT: Replace 'your-backend-name' with your actual backend URL once deployed
+const API_BASE_URL = 'https://your-backend-name.onrender.com'; // TODO: Replace with your deployed backend URL
+
+// Temporary fallback for development (uncomment the line below if testing locally)
+// const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5001' : 'https://your-backend-name.onrender.com';
+
 const API_CONFIG = {
     baseUrl: API_BASE_URL,
     endpoints: {
