@@ -1,9 +1,6 @@
 # Node modules
 node_modules/
 
-# Environment files
-.env
-.env.*   # For additional env files like .env.production, etc.
 
 # VS Code settings
 .vscode/
