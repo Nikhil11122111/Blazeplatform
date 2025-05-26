@@ -26,7 +26,7 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
     origin: [
-      'https://blazeplatform.onrender.com',
+      'https://blaze-266099623138.asia-east1.run.app',
       'http://localhost:3000',
       'http://localhost:5001'
     ],
@@ -47,7 +47,7 @@ app.set('io', io);
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
-      'https://blazeplatform.onrender.com',
+      'https://blaze-266099623138.asia-east1.run.app',
       'http://localhost:3000',
       'http://localhost:5001'
     ];

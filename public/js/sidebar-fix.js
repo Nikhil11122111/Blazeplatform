@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Fetch user ID asynchronously - this won't help the current execution
                 // but will help on future calls to this function
-                fetch('https://blazeplatform.onrender.com/api/auth/me', {
+                fetch('https://blaze-266099623138.asia-east1.run.app/api/auth/me', {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

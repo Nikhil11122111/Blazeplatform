@@ -2,7 +2,7 @@
 
 ## Backend Deployment
 
-Your frontend is currently deployed at https://blazeplatform.onrender.com, but you need to deploy your backend separately.
+Your frontend is currently deployed at https://blaze-266099623138.asia-east1.run.app, but you need to deploy your backend separately.
 
 ### Steps to Deploy Backend:
 
@@ -38,7 +38,7 @@ Your frontend is currently deployed at https://blazeplatform.onrender.com, but y
 
 ## Current Status
 
-- ✅ Frontend deployed at: https://blazeplatform.onrender.com
+- ✅ Frontend deployed at: https://blaze-266099623138.asia-east1.run.app
 - ❌ Backend not deployed yet (needs to be deployed separately)
 - ✅ CORS configured to accept requests from frontend
 - ✅ API configuration centralized in config-api.js

@@ -223,7 +223,7 @@ async function initChatInterface() {
         }
         
         // Attempt to fetch user data from server
-        const response = await fetch('https://blazeplatform.onrender.com/api/auth/me', {
+        const response = await fetch('https://blaze-266099623138.asia-east1.run.app/api/auth/me', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
