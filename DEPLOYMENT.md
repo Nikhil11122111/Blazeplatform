@@ -32,7 +32,7 @@ Your frontend is currently deployed at https://blaze-266099623138.asia-east1.run
    In `public/js/config-api.js`, change:
    ```javascript
    const API_BASE_URL = window.location.hostname === 'localhost' 
-       ? 'http://localhost:5001' 
+       ? 'http://https://blaze-266099623138.asia-east1.run.app' 
        : 'https://blazeplatform-backend.onrender.com'; // Replace with your actual backend URL
    ```
 

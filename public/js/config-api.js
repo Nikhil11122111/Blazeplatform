@@ -7,7 +7,7 @@
 const API_BASE_URL = 'https://blaze-266099623138.asia-east1.run.app'; // TODO: Replace with your deployed backend URL
 
 // Temporary fallback for development (uncomment the line below if testing locally)
-// const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5001' : 'https://your-backend-name.onrender.com';
+// const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://https://blaze-266099623138.asia-east1.run.app' : 'https://your-backend-name.onrender.com';
 
 const API_CONFIG = {
     baseUrl: API_BASE_URL,

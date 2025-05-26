@@ -28,7 +28,7 @@ const io = socketIo(server, {
     origin: [
       'https://blaze-266099623138.asia-east1.run.app',
       'http://localhost:3000',
-      'http://localhost:5001'
+      'http://https://blaze-266099623138.asia-east1.run.app'
     ],
     methods: ["GET", "POST"],
     credentials: true,
@@ -49,7 +49,7 @@ const corsOptions = {
     const allowedOrigins = [
       'https://blaze-266099623138.asia-east1.run.app',
       'http://localhost:3000',
-      'http://localhost:5001'
+      'http://https://blaze-266099623138.asia-east1.run.app'
     ];
     
     // Allow requests with no origin (like mobile apps or Postman)
